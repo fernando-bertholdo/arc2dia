@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+
+# Output of the tool. These hold real browsing data; never commit them.
+arc2dia-out/
+arc2dia-plan.json
+arc2dia-backups/
+StorableSidebar*.json
+bookmarks.html
+dia-dump*.txt

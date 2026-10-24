@@ -1,0 +1,2142 @@
+{
+  "sidebar": {
+    "containers": [
+      {
+        "global": {}
+      },
+      {
+        "spaces": [
+          "7E9172F6-52E4-556C-A27C-7342A5055328",
+          {
+            "id": "7E9172F6-52E4-556C-A27C-7342A5055328",
+            "title": "Work",
+            "profile": {
+              "default": true
+            },
+            "customInfo": {
+              "iconType": {
+                "icon": "star"
+              },
+              "windowTheme": {
+                "semanticColorPalettes": {}
+              }
+            },
+            "newContainerIDs": [
+              {
+                "pinned": {}
+              },
+              "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+              {
+                "unpinned": {
+                  "_0": {
+                    "shared": {}
+                  }
+                }
+              },
+              "F9A68617-8B59-5A17-B2C0-717B1FB89E9D"
+            ],
+            "containerIDs": [
+              "pinned",
+              "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+              "unpinned",
+              "F9A68617-8B59-5A17-B2C0-717B1FB89E9D"
+            ]
+          },
+          "DE2B5428-FCB5-5105-80D0-B5435F2DF09D",
+          {
+            "id": "DE2B5428-FCB5-5105-80D0-B5435F2DF09D",
+            "title": "Personal",
+            "profile": {
+              "custom": {
+                "_0": {
+                  "directoryBasename": "Profile 1",
+                  "machineID": "SYNTHETIC-MACHINE"
+                }
+              }
+            },
+            "customInfo": {
+              "iconType": {
+                "icon": "star"
+              },
+              "windowTheme": {
+                "semanticColorPalettes": {}
+              }
+            },
+            "newContainerIDs": [
+              {
+                "pinned": {}
+              },
+              "0BED8919-26B3-5D20-A690-E9B2CEFF6440",
+              {
+                "unpinned": {
+                  "_0": {
+                    "shared": {}
+                  }
+                }
+              },
+              "638E4A92-ED1A-5BDB-8822-D7A38DA884F9"
+            ],
+            "containerIDs": [
+              "pinned",
+              "0BED8919-26B3-5D20-A690-E9B2CEFF6440",
+              "unpinned",
+              "638E4A92-ED1A-5BDB-8822-D7A38DA884F9"
+            ]
+          },
+          "F0221F98-5EF7-52AE-939C-DA37232F4E0A",
+          {
+            "id": "F0221F98-5EF7-52AE-939C-DA37232F4E0A",
+            "title": null,
+            "profile": {
+              "default": true
+            },
+            "customInfo": {
+              "iconType": {
+                "icon": "star"
+              },
+              "windowTheme": {
+                "semanticColorPalettes": {}
+              }
+            },
+            "newContainerIDs": [
+              {
+                "pinned": {}
+              },
+              "1CBC485F-610D-5D41-BB28-76ED8B862590",
+              {
+                "unpinned": {
+                  "_0": {
+                    "shared": {}
+                  }
+                }
+              },
+              "5AA3FBB1-EF05-56C5-B019-21660220CD35"
+            ],
+            "containerIDs": [
+              "pinned",
+              "1CBC485F-610D-5D41-BB28-76ED8B862590",
+              "unpinned",
+              "5AA3FBB1-EF05-56C5-B019-21660220CD35"
+            ]
+          },
+          "CB52A887-2201-5858-9888-31C127F090A7",
+          {
+            "id": "CB52A887-2201-5858-9888-31C127F090A7",
+            "title": "Research",
+            "profile": {
+              "default": true
+            },
+            "customInfo": {
+              "iconType": {
+                "icon": "star"
+              },
+              "windowTheme": {
+                "semanticColorPalettes": {}
+              }
+            },
+            "newContainerIDs": [
+              {
+                "pinned": {}
+              },
+              "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+              {
+                "unpinned": {
+                  "_0": {
+                    "shared": {}
+                  }
+                }
+              },
+              "6EFBF6BA-ACE3-591D-ABF0-C4529E0751BF"
+            ],
+            "containerIDs": [
+              "pinned",
+              "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+              "unpinned",
+              "6EFBF6BA-ACE3-591D-ABF0-C4529E0751BF"
+            ]
+          }
+        ],
+        "items": [
+          "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+          {
+            "id": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700000061.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "09C5F2DD-81C2-55AD-ADD7-06DD64717B90",
+              "8DC3CC00-4F31-5281-9086-AFB9E0D71BCB",
+              "35CC0061-A8C5-5F59-B630-2EEA36FDFE9C",
+              "375D8C82-BC68-533E-BF1D-382ABEDCAAE2",
+              "6AC5605F-2267-57CE-A013-9CF4D690F881",
+              "10312691-D1BD-5D68-B58B-8A55DE72D0DB",
+              "D7510EC5-771E-5189-9CB5-9D09D2EBFEDB",
+              "9E759563-6834-5767-8CD6-926396925F1C",
+              "290C65A3-9130-5D96-88EC-CE6E53F32509"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "spaceItems": {
+                    "_0": "7E9172F6-52E4-556C-A27C-7342A5055328"
+                  }
+                }
+              }
+            }
+          },
+          "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+          {
+            "id": "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700000123.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "298BD5B2-5BFF-51B8-A27F-9F76CCEC8ADE",
+              "879F1EED-6CE8-5283-B860-AE11997D9BE4",
+              "F7D21ED6-EC5A-57CC-A4BA-5DE47D965A92",
+              "05F1228D-BB5F-5345-8149-F3ACE631DBBC",
+              "B658EF2D-21E9-5405-A101-25F278F9BBB2",
+              "BD2BD978-B579-5B33-98E6-E70C5397617F",
+              "A4BB51FB-625E-56C0-B52F-B3B953B79515"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "spaceItems": {
+                    "_0": "7E9172F6-52E4-556C-A27C-7342A5055328"
+                  }
+                }
+              }
+            }
+          },
+          "09C5F2DD-81C2-55AD-ADD7-06DD64717B90",
+          {
+            "id": "09C5F2DD-81C2-55AD-ADD7-06DD64717B90",
+            "title": "Team Wiki",
+            "isUnread": false,
+            "createdAt": 700000246.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://wiki.example.com/",
+                "savedTitle": "Team Wiki",
+                "timeLastActiveAt": 700000184.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "8DC3CC00-4F31-5281-9086-AFB9E0D71BCB",
+          {
+            "id": "8DC3CC00-4F31-5281-9086-AFB9E0D71BCB",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700000369.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [
+              "485A8798-874D-5BE7-A4ED-B80A3D686669",
+              "FDB4405F-BDBF-551E-83D3-E58BC5A5C219"
+            ],
+            "data": {
+              "splitView": {
+                "layoutOrientation": "horizontal",
+                "timeLastActiveAt": 700000307.5
+              }
+            }
+          },
+          "485A8798-874D-5BE7-A4ED-B80A3D686669",
+          {
+            "id": "485A8798-874D-5BE7-A4ED-B80A3D686669",
+            "title": "docs.example.com",
+            "isUnread": false,
+            "createdAt": 700000492.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "8DC3CC00-4F31-5281-9086-AFB9E0D71BCB",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://docs.example.com/a",
+                "savedTitle": "docs.example.com",
+                "timeLastActiveAt": 700000430.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "FDB4405F-BDBF-551E-83D3-E58BC5A5C219",
+          {
+            "id": "FDB4405F-BDBF-551E-83D3-E58BC5A5C219",
+            "title": "docs.example.com",
+            "isUnread": false,
+            "createdAt": 700000615.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "8DC3CC00-4F31-5281-9086-AFB9E0D71BCB",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://docs.example.com/b",
+                "savedTitle": "docs.example.com",
+                "timeLastActiveAt": 700000553.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "35CC0061-A8C5-5F59-B630-2EEA36FDFE9C",
+          {
+            "id": "35CC0061-A8C5-5F59-B630-2EEA36FDFE9C",
+            "title": "Projects",
+            "isUnread": false,
+            "createdAt": 700000676.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [
+              "31E55521-A07D-5C2F-AD6F-F1EE8FDCCC0D",
+              "2EFC396A-04C6-5FD4-BDE5-9B4E22996F84",
+              "E56EC036-0092-5844-8F3F-9CBB1E0214DC"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "31E55521-A07D-5C2F-AD6F-F1EE8FDCCC0D",
+          {
+            "id": "31E55521-A07D-5C2F-AD6F-F1EE8FDCCC0D",
+            "title": "Alpha board",
+            "isUnread": false,
+            "createdAt": 700000799.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "35CC0061-A8C5-5F59-B630-2EEA36FDFE9C",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://alpha.example.com/board",
+                "savedTitle": "Alpha board",
+                "timeLastActiveAt": 700000738.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "2EFC396A-04C6-5FD4-BDE5-9B4E22996F84",
+          {
+            "id": "2EFC396A-04C6-5FD4-BDE5-9B4E22996F84",
+            "title": "Alpha",
+            "isUnread": false,
+            "createdAt": 700000861.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "35CC0061-A8C5-5F59-B630-2EEA36FDFE9C",
+            "childrenIds": [
+              "14BC652E-AFD3-5AFA-BBF7-CA245C155F9E",
+              "E02A714C-16E3-5AEB-BDA3-18A3E05E3293"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "14BC652E-AFD3-5AFA-BBF7-CA245C155F9E",
+          {
+            "id": "14BC652E-AFD3-5AFA-BBF7-CA245C155F9E",
+            "title": "Alpha spec",
+            "isUnread": false,
+            "createdAt": 700000984.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2EFC396A-04C6-5FD4-BDE5-9B4E22996F84",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://alpha.example.com/spec",
+                "savedTitle": "Alpha spec",
+                "timeLastActiveAt": 700000922.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "E02A714C-16E3-5AEB-BDA3-18A3E05E3293",
+          {
+            "id": "E02A714C-16E3-5AEB-BDA3-18A3E05E3293",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700001107.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2EFC396A-04C6-5FD4-BDE5-9B4E22996F84",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://alpha.example.com/notes",
+                "savedTitle": "Alpha notes",
+                "timeLastActiveAt": 700001045.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "E56EC036-0092-5844-8F3F-9CBB1E0214DC",
+          {
+            "id": "E56EC036-0092-5844-8F3F-9CBB1E0214DC",
+            "title": "Beta",
+            "isUnread": false,
+            "createdAt": 700001168.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "35CC0061-A8C5-5F59-B630-2EEA36FDFE9C",
+            "childrenIds": [
+              "2B3BBCA2-3D97-5675-9F6D-8AD4B262DDB4",
+              "03A4D593-E1E5-5A4F-86EF-16E66B78C64D"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "2B3BBCA2-3D97-5675-9F6D-8AD4B262DDB4",
+          {
+            "id": "2B3BBCA2-3D97-5675-9F6D-8AD4B262DDB4",
+            "title": "Beta",
+            "isUnread": false,
+            "createdAt": 700001291.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "E56EC036-0092-5844-8F3F-9CBB1E0214DC",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://beta.example.com/",
+                "savedTitle": "Beta",
+                "timeLastActiveAt": 700001230.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "03A4D593-E1E5-5A4F-86EF-16E66B78C64D",
+          {
+            "id": "03A4D593-E1E5-5A4F-86EF-16E66B78C64D",
+            "title": "Team Wiki (again)",
+            "isUnread": false,
+            "createdAt": 700001414.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "E56EC036-0092-5844-8F3F-9CBB1E0214DC",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://wiki.example.com/",
+                "savedTitle": "Team Wiki (again)",
+                "timeLastActiveAt": 700001353.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "375D8C82-BC68-533E-BF1D-382ABEDCAAE2",
+          {
+            "id": "375D8C82-BC68-533E-BF1D-382ABEDCAAE2",
+            "title": "Imported From Edge",
+            "isUnread": false,
+            "createdAt": 700001476.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [
+              "2116621F-2122-514F-82D1-FEA5A7574A7A",
+              "8614AACA-F5A6-533D-B2DD-A9CD39BA7E98"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "2116621F-2122-514F-82D1-FEA5A7574A7A",
+          {
+            "id": "2116621F-2122-514F-82D1-FEA5A7574A7A",
+            "title": "Favorites bar",
+            "isUnread": false,
+            "createdAt": 700001537.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "375D8C82-BC68-533E-BF1D-382ABEDCAAE2",
+            "childrenIds": [
+              "390A5F5C-848E-5BE3-838D-06DE58126953",
+              "00554D92-9452-53A3-B8FA-B849EDDF420D"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "390A5F5C-848E-5BE3-838D-06DE58126953",
+          {
+            "id": "390A5F5C-848E-5BE3-838D-06DE58126953",
+            "title": "Dev",
+            "isUnread": false,
+            "createdAt": 700001599.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2116621F-2122-514F-82D1-FEA5A7574A7A",
+            "childrenIds": [
+              "0C5E30D5-B4C4-5A09-A0BB-0A694F3344BE",
+              "D9898568-CF01-5CDE-88AD-232A188FF51D"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "0C5E30D5-B4C4-5A09-A0BB-0A694F3344BE",
+          {
+            "id": "0C5E30D5-B4C4-5A09-A0BB-0A694F3344BE",
+            "title": "Python",
+            "isUnread": false,
+            "createdAt": 700001660.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "390A5F5C-848E-5BE3-838D-06DE58126953",
+            "childrenIds": [
+              "3F5CE5F9-2E0A-5017-A023-C0644DEA2973",
+              "1DF1CE24-7890-56C1-BBE5-EAE695D69645"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "3F5CE5F9-2E0A-5017-A023-C0644DEA2973",
+          {
+            "id": "3F5CE5F9-2E0A-5017-A023-C0644DEA2973",
+            "title": "Libraries",
+            "isUnread": false,
+            "createdAt": 700001722.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "0C5E30D5-B4C4-5A09-A0BB-0A694F3344BE",
+            "childrenIds": [
+              "190853E4-604C-5071-8020-81DC4BEEF4FE",
+              "B16AABF4-1D61-5515-82DA-FB426BDA9005"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "190853E4-604C-5071-8020-81DC4BEEF4FE",
+          {
+            "id": "190853E4-604C-5071-8020-81DC4BEEF4FE",
+            "title": "requests",
+            "isUnread": false,
+            "createdAt": 700001845.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "3F5CE5F9-2E0A-5017-A023-C0644DEA2973",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://pypi.example.org/project/requests",
+                "savedTitle": "requests",
+                "timeLastActiveAt": 700001783.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "B16AABF4-1D61-5515-82DA-FB426BDA9005",
+          {
+            "id": "B16AABF4-1D61-5515-82DA-FB426BDA9005",
+            "title": "attrs",
+            "isUnread": false,
+            "createdAt": 700001968.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "3F5CE5F9-2E0A-5017-A023-C0644DEA2973",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://pypi.example.org/project/attrs",
+                "savedTitle": "attrs",
+                "timeLastActiveAt": 700001906.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "1DF1CE24-7890-56C1-BBE5-EAE695D69645",
+          {
+            "id": "1DF1CE24-7890-56C1-BBE5-EAE695D69645",
+            "title": "Python docs",
+            "isUnread": false,
+            "createdAt": 700002091.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "0C5E30D5-B4C4-5A09-A0BB-0A694F3344BE",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://docs.python.example.org/3/",
+                "savedTitle": "Python docs",
+                "timeLastActiveAt": 700002029.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "D9898568-CF01-5CDE-88AD-232A188FF51D",
+          {
+            "id": "D9898568-CF01-5CDE-88AD-232A188FF51D",
+            "title": "Git host",
+            "isUnread": false,
+            "createdAt": 700002214.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "390A5F5C-848E-5BE3-838D-06DE58126953",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://git.example.com/",
+                "savedTitle": "Git host",
+                "timeLastActiveAt": 700002152.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "00554D92-9452-53A3-B8FA-B849EDDF420D",
+          {
+            "id": "00554D92-9452-53A3-B8FA-B849EDDF420D",
+            "title": "News",
+            "isUnread": false,
+            "createdAt": 700002337.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2116621F-2122-514F-82D1-FEA5A7574A7A",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://news.example.com/",
+                "savedTitle": "News",
+                "timeLastActiveAt": 700002275.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "8614AACA-F5A6-533D-B2DD-A9CD39BA7E98",
+          {
+            "id": "8614AACA-F5A6-533D-B2DD-A9CD39BA7E98",
+            "title": "Other favorites",
+            "isUnread": false,
+            "createdAt": 700002398.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "375D8C82-BC68-533E-BF1D-382ABEDCAAE2",
+            "childrenIds": [
+              "45D67CA6-3B17-533C-8861-E18245757CA5",
+              "2B5CBEB5-8802-54C3-B870-39DC14A2B0F4"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "45D67CA6-3B17-533C-8861-E18245757CA5",
+          {
+            "id": "45D67CA6-3B17-533C-8861-E18245757CA5",
+            "title": "Bread",
+            "isUnread": false,
+            "createdAt": 700002521.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "8614AACA-F5A6-533D-B2DD-A9CD39BA7E98",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://recipes.example.net/bread",
+                "savedTitle": "Bread",
+                "timeLastActiveAt": 700002460.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "2B5CBEB5-8802-54C3-B870-39DC14A2B0F4",
+          {
+            "id": "2B5CBEB5-8802-54C3-B870-39DC14A2B0F4",
+            "title": "A bookmarklet",
+            "isUnread": false,
+            "createdAt": 700002644.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "8614AACA-F5A6-533D-B2DD-A9CD39BA7E98",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "javascript:alert('bookmarklet')",
+                "savedTitle": "A bookmarklet",
+                "timeLastActiveAt": 700002583.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "6AC5605F-2267-57CE-A013-9CF4D690F881",
+          {
+            "id": "6AC5605F-2267-57CE-A013-9CF4D690F881",
+            "title": "Imported From Edge",
+            "isUnread": false,
+            "createdAt": 700002706.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [
+              "908C27D3-021B-5B2F-BAF9-8EB314742670",
+              "7D3572B7-4ED4-5C53-97C4-D85BDD7CD560",
+              "B72B7E6E-F5DF-553B-A84B-983C09CF2E47",
+              "CE31582F-2577-5DB3-9C48-F031D9C6B961"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "908C27D3-021B-5B2F-BAF9-8EB314742670",
+          {
+            "id": "908C27D3-021B-5B2F-BAF9-8EB314742670",
+            "title": "Dev",
+            "isUnread": false,
+            "createdAt": 700002767.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "6AC5605F-2267-57CE-A013-9CF4D690F881",
+            "childrenIds": [
+              "E6A30EB2-C469-580A-9898-5822C2C0C517",
+              "3F1C8576-203D-5797-A96F-DD43797DD1EC"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "E6A30EB2-C469-580A-9898-5822C2C0C517",
+          {
+            "id": "E6A30EB2-C469-580A-9898-5822C2C0C517",
+            "title": "Python",
+            "isUnread": false,
+            "createdAt": 700002829.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "908C27D3-021B-5B2F-BAF9-8EB314742670",
+            "childrenIds": [
+              "8ED3798E-7C39-5725-8527-428974976498",
+              "80D59476-9AD6-5422-A7E0-667725D9C18A"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "8ED3798E-7C39-5725-8527-428974976498",
+          {
+            "id": "8ED3798E-7C39-5725-8527-428974976498",
+            "title": "Libraries",
+            "isUnread": false,
+            "createdAt": 700002890.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "E6A30EB2-C469-580A-9898-5822C2C0C517",
+            "childrenIds": [
+              "46572AF9-84D5-56A5-AC4F-1290153118E5",
+              "7AB3C1A8-5A2F-5B9F-85AF-624A2723B276"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "46572AF9-84D5-56A5-AC4F-1290153118E5",
+          {
+            "id": "46572AF9-84D5-56A5-AC4F-1290153118E5",
+            "title": "requests",
+            "isUnread": false,
+            "createdAt": 700003013.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "8ED3798E-7C39-5725-8527-428974976498",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://pypi.example.org/project/requests",
+                "savedTitle": "requests",
+                "timeLastActiveAt": 700002952.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "7AB3C1A8-5A2F-5B9F-85AF-624A2723B276",
+          {
+            "id": "7AB3C1A8-5A2F-5B9F-85AF-624A2723B276",
+            "title": "attrs",
+            "isUnread": false,
+            "createdAt": 700003136.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "8ED3798E-7C39-5725-8527-428974976498",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://pypi.example.org/project/attrs",
+                "savedTitle": "attrs",
+                "timeLastActiveAt": 700003075.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "80D59476-9AD6-5422-A7E0-667725D9C18A",
+          {
+            "id": "80D59476-9AD6-5422-A7E0-667725D9C18A",
+            "title": "Python docs",
+            "isUnread": false,
+            "createdAt": 700003259.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "E6A30EB2-C469-580A-9898-5822C2C0C517",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://docs.python.example.org/3/",
+                "savedTitle": "Python docs",
+                "timeLastActiveAt": 700003198.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "3F1C8576-203D-5797-A96F-DD43797DD1EC",
+          {
+            "id": "3F1C8576-203D-5797-A96F-DD43797DD1EC",
+            "title": "Git host",
+            "isUnread": false,
+            "createdAt": 700003382.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "908C27D3-021B-5B2F-BAF9-8EB314742670",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://git.example.com/",
+                "savedTitle": "Git host",
+                "timeLastActiveAt": 700003321.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "7D3572B7-4ED4-5C53-97C4-D85BDD7CD560",
+          {
+            "id": "7D3572B7-4ED4-5C53-97C4-D85BDD7CD560",
+            "title": "News",
+            "isUnread": false,
+            "createdAt": 700003505.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "6AC5605F-2267-57CE-A013-9CF4D690F881",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://news.example.com/",
+                "savedTitle": "News",
+                "timeLastActiveAt": 700003444.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "B72B7E6E-F5DF-553B-A84B-983C09CF2E47",
+          {
+            "id": "B72B7E6E-F5DF-553B-A84B-983C09CF2E47",
+            "title": "Bread",
+            "isUnread": false,
+            "createdAt": 700003628.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "6AC5605F-2267-57CE-A013-9CF4D690F881",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://recipes.example.net/bread",
+                "savedTitle": "Bread",
+                "timeLastActiveAt": 700003567.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "CE31582F-2577-5DB3-9C48-F031D9C6B961",
+          {
+            "id": "CE31582F-2577-5DB3-9C48-F031D9C6B961",
+            "title": "A bookmarklet",
+            "isUnread": false,
+            "createdAt": 700003751.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "6AC5605F-2267-57CE-A013-9CF4D690F881",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "javascript:alert('bookmarklet')",
+                "savedTitle": "A bookmarklet",
+                "timeLastActiveAt": 700003690.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "10312691-D1BD-5D68-B58B-8A55DE72D0DB",
+          {
+            "id": "10312691-D1BD-5D68-B58B-8A55DE72D0DB",
+            "title": "Empty folder",
+            "isUnread": false,
+            "createdAt": 700003813.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [],
+            "data": {
+              "list": {}
+            }
+          },
+          "D7510EC5-771E-5189-9CB5-9D09D2EBFEDB",
+          {
+            "id": "D7510EC5-771E-5189-9CB5-9D09D2EBFEDB",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700003874.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [
+              "7C8DD19F-9169-572A-80A6-2BB6E38A0B8E",
+              "29FAE93F-123F-5229-945A-13266AEFD154"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "7C8DD19F-9169-572A-80A6-2BB6E38A0B8E",
+          {
+            "id": "7C8DD19F-9169-572A-80A6-2BB6E38A0B8E",
+            "title": "report.pdf",
+            "isUnread": false,
+            "createdAt": 700003997.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "D7510EC5-771E-5189-9CB5-9D09D2EBFEDB",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "file:///Users/example/Documents/report.pdf",
+                "savedTitle": "report.pdf",
+                "timeLastActiveAt": 700003936.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "29FAE93F-123F-5229-945A-13266AEFD154",
+          {
+            "id": "29FAE93F-123F-5229-945A-13266AEFD154",
+            "title": "Extension options",
+            "isUnread": false,
+            "createdAt": 700004120.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "D7510EC5-771E-5189-9CB5-9D09D2EBFEDB",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "chrome-extension://abcdefghijklmnop/options.html",
+                "savedTitle": "Extension options",
+                "timeLastActiveAt": 700004059.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "9E759563-6834-5767-8CD6-926396925F1C",
+          {
+            "id": "9E759563-6834-5767-8CD6-926396925F1C",
+            "title": "Shells",
+            "isUnread": false,
+            "createdAt": 700004182.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [
+              "BE330066-442E-5778-B28F-B10A3082336D"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "BE330066-442E-5778-B28F-B10A3082336D",
+          {
+            "id": "BE330066-442E-5778-B28F-B10A3082336D",
+            "title": "Inner",
+            "isUnread": false,
+            "createdAt": 700004243.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "9E759563-6834-5767-8CD6-926396925F1C",
+            "childrenIds": [],
+            "data": {
+              "list": {}
+            }
+          },
+          "290C65A3-9130-5D96-88EC-CE6E53F32509",
+          {
+            "id": "290C65A3-9130-5D96-88EC-CE6E53F32509",
+            "title": "Moodboard",
+            "isUnread": false,
+            "createdAt": 700004305.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "BC422697-C56E-5DD9-96C9-0A1CD9585EC8",
+            "childrenIds": [],
+            "data": {
+              "easel": {
+                "easelID": "2264B756-6391-5133-BEBA-BFFABA9F3710",
+                "title": "Moodboard"
+              }
+            }
+          },
+          "298BD5B2-5BFF-51B8-A27F-9F76CCEC8ADE",
+          {
+            "id": "298BD5B2-5BFF-51B8-A27F-9F76CCEC8ADE",
+            "title": "Inbox",
+            "isUnread": false,
+            "createdAt": 700004428.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://mail.example.com/inbox",
+                "savedTitle": "Inbox",
+                "timeLastActiveAt": 700004366.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "879F1EED-6CE8-5283-B860-AE11997D9BE4",
+          {
+            "id": "879F1EED-6CE8-5283-B860-AE11997D9BE4",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700004551.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+            "childrenIds": [
+              "13087527-031A-522D-A982-16C28FD85BEF",
+              "7FDC6DD2-01A3-5D6A-9EB2-A50EFC8BA902"
+            ],
+            "data": {
+              "splitView": {
+                "layoutOrientation": "horizontal",
+                "timeLastActiveAt": 700004489.5
+              }
+            }
+          },
+          "13087527-031A-522D-A982-16C28FD85BEF",
+          {
+            "id": "13087527-031A-522D-A982-16C28FD85BEF",
+            "title": "calendar.example.com",
+            "isUnread": false,
+            "createdAt": 700004674.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "879F1EED-6CE8-5283-B860-AE11997D9BE4",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://calendar.example.com/",
+                "savedTitle": "calendar.example.com",
+                "timeLastActiveAt": 700004612.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "7FDC6DD2-01A3-5D6A-9EB2-A50EFC8BA902",
+          {
+            "id": "7FDC6DD2-01A3-5D6A-9EB2-A50EFC8BA902",
+            "title": "meet.example.com",
+            "isUnread": false,
+            "createdAt": 700004797.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "879F1EED-6CE8-5283-B860-AE11997D9BE4",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://meet.example.com/room",
+                "savedTitle": "meet.example.com",
+                "timeLastActiveAt": 700004735.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "F7D21ED6-EC5A-57CC-A4BA-5DE47D965A92",
+          {
+            "id": "F7D21ED6-EC5A-57CC-A4BA-5DE47D965A92",
+            "title": "Team Wiki",
+            "isUnread": false,
+            "createdAt": 700004920.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://wiki.example.com/",
+                "savedTitle": "Team Wiki",
+                "timeLastActiveAt": 700004858.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "05F1228D-BB5F-5345-8149-F3ACE631DBBC",
+          {
+            "id": "05F1228D-BB5F-5345-8149-F3ACE631DBBC",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700005043.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://search.example.com/?q=arc+to+dia",
+                "savedTitle": "",
+                "timeLastActiveAt": 700004981.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "B658EF2D-21E9-5405-A101-25F278F9BBB2",
+          {
+            "id": "B658EF2D-21E9-5405-A101-25F278F9BBB2",
+            "title": "data URL",
+            "isUnread": false,
+            "createdAt": 700005166.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "data:text/plain,hello",
+                "savedTitle": "data URL",
+                "timeLastActiveAt": 700005104.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "BD2BD978-B579-5B33-98E6-E70C5397617F",
+          {
+            "id": "BD2BD978-B579-5B33-98E6-E70C5397617F",
+            "title": "Blank",
+            "isUnread": false,
+            "createdAt": 700005289.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "about:blank",
+                "savedTitle": "Blank",
+                "timeLastActiveAt": 700005227.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "A4BB51FB-625E-56C0-B52F-B3B953B79515",
+          {
+            "id": "A4BB51FB-625E-56C0-B52F-B3B953B79515",
+            "title": "Scratch notes",
+            "isUnread": false,
+            "createdAt": 700005350.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "F9A68617-8B59-5A17-B2C0-717B1FB89E9D",
+            "childrenIds": [],
+            "data": {
+              "arcDocument": {
+                "arcDocumentID": "110C0E2F-2F4B-5FFA-9574-4BB2FBCF2B66"
+              }
+            }
+          },
+          "0BED8919-26B3-5D20-A690-E9B2CEFF6440",
+          {
+            "id": "0BED8919-26B3-5D20-A690-E9B2CEFF6440",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700005412.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "9CA97F32-8303-518F-BFE9-E9F090F21D41",
+              "9CA5C403-DEF4-522F-9219-426A5EB2A169",
+              "05924029-3594-53A8-BF00-C8E20F86EE9C"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "spaceItems": {
+                    "_0": "DE2B5428-FCB5-5105-80D0-B5435F2DF09D"
+                  }
+                }
+              }
+            }
+          },
+          "638E4A92-ED1A-5BDB-8822-D7A38DA884F9",
+          {
+            "id": "638E4A92-ED1A-5BDB-8822-D7A38DA884F9",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700005473.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "ED5D6D36-3212-5C4F-8457-48DD149503D3",
+              "00657038-097A-59D5-BE2C-3D96B02139BD"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "spaceItems": {
+                    "_0": "DE2B5428-FCB5-5105-80D0-B5435F2DF09D"
+                  }
+                }
+              }
+            }
+          },
+          "9CA97F32-8303-518F-BFE9-E9F090F21D41",
+          {
+            "id": "9CA97F32-8303-518F-BFE9-E9F090F21D41",
+            "title": "Recipes",
+            "isUnread": false,
+            "createdAt": 700005535.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "0BED8919-26B3-5D20-A690-E9B2CEFF6440",
+            "childrenIds": [
+              "FD2AB963-7097-5763-93C7-6C8CC78B66C0",
+              "A60E34AC-04D6-5957-8518-C4DCE27EE2F2"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "FD2AB963-7097-5763-93C7-6C8CC78B66C0",
+          {
+            "id": "FD2AB963-7097-5763-93C7-6C8CC78B66C0",
+            "title": "Soup <& \"quotes\">",
+            "isUnread": false,
+            "createdAt": 700005658.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "9CA97F32-8303-518F-BFE9-E9F090F21D41",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://recipes.example.net/soup",
+                "savedTitle": "Soup <& \"quotes\">",
+                "timeLastActiveAt": 700005596.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "A60E34AC-04D6-5957-8518-C4DCE27EE2F2",
+          {
+            "id": "A60E34AC-04D6-5957-8518-C4DCE27EE2F2",
+            "title": "Cake",
+            "isUnread": false,
+            "createdAt": 700005781.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "9CA97F32-8303-518F-BFE9-E9F090F21D41",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://recipes.example.net/cake",
+                "savedTitle": "Cake",
+                "timeLastActiveAt": 700005719.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "9CA5C403-DEF4-522F-9219-426A5EB2A169",
+          {
+            "id": "9CA5C403-DEF4-522F-9219-426A5EB2A169",
+            "title": "Reading",
+            "isUnread": false,
+            "createdAt": 700005842.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "0BED8919-26B3-5D20-A690-E9B2CEFF6440",
+            "childrenIds": [
+              "04D38CFF-0987-5607-8D52-1D2FED9BBDF3",
+              "22D6EC76-9F69-55E7-A8DC-18D75490CABB"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "04D38CFF-0987-5607-8D52-1D2FED9BBDF3",
+          {
+            "id": "04D38CFF-0987-5607-8D52-1D2FED9BBDF3",
+            "title": "Recipes",
+            "isUnread": false,
+            "createdAt": 700005904.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "9CA5C403-DEF4-522F-9219-426A5EB2A169",
+            "childrenIds": [
+              "CC3568EE-002E-5FFA-8224-0B0605FA7EFA",
+              "7D57497E-140F-56FE-8959-E0AE5E2C08DA"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "CC3568EE-002E-5FFA-8224-0B0605FA7EFA",
+          {
+            "id": "CC3568EE-002E-5FFA-8224-0B0605FA7EFA",
+            "title": "Soup <& \"quotes\">",
+            "isUnread": false,
+            "createdAt": 700006027.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "04D38CFF-0987-5607-8D52-1D2FED9BBDF3",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://recipes.example.net/soup",
+                "savedTitle": "Soup <& \"quotes\">",
+                "timeLastActiveAt": 700005965.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "7D57497E-140F-56FE-8959-E0AE5E2C08DA",
+          {
+            "id": "7D57497E-140F-56FE-8959-E0AE5E2C08DA",
+            "title": "Cake",
+            "isUnread": false,
+            "createdAt": 700006150.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "04D38CFF-0987-5607-8D52-1D2FED9BBDF3",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://recipes.example.net/cake",
+                "savedTitle": "Cake",
+                "timeLastActiveAt": 700006088.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "22D6EC76-9F69-55E7-A8DC-18D75490CABB",
+          {
+            "id": "22D6EC76-9F69-55E7-A8DC-18D75490CABB",
+            "title": "Book list",
+            "isUnread": false,
+            "createdAt": 700006273.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "9CA5C403-DEF4-522F-9219-426A5EB2A169",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://books.example.org/list",
+                "savedTitle": "Book list",
+                "timeLastActiveAt": 700006211.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "05924029-3594-53A8-BF00-C8E20F86EE9C",
+          {
+            "id": "05924029-3594-53A8-BF00-C8E20F86EE9C",
+            "title": "Bank",
+            "isUnread": false,
+            "createdAt": 700006396.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "0BED8919-26B3-5D20-A690-E9B2CEFF6440",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://bank.example.com/",
+                "savedTitle": "Bank",
+                "timeLastActiveAt": 700006334.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "ED5D6D36-3212-5C4F-8457-48DD149503D3",
+          {
+            "id": "ED5D6D36-3212-5C4F-8457-48DD149503D3",
+            "title": "A video",
+            "isUnread": false,
+            "createdAt": 700006519.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "638E4A92-ED1A-5BDB-8822-D7A38DA884F9",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://video.example.com/watch?v=123",
+                "savedTitle": "A video",
+                "timeLastActiveAt": 700006457.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "00657038-097A-59D5-BE2C-3D96B02139BD",
+          {
+            "id": "00657038-097A-59D5-BE2C-3D96B02139BD",
+            "title": "Cart",
+            "isUnread": false,
+            "createdAt": 700006642.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "638E4A92-ED1A-5BDB-8822-D7A38DA884F9",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://shop.example.com/cart",
+                "savedTitle": "Cart",
+                "timeLastActiveAt": 700006580.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "1CBC485F-610D-5D41-BB28-76ED8B862590",
+          {
+            "id": "1CBC485F-610D-5D41-BB28-76ED8B862590",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700006703.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "spaceItems": {
+                    "_0": "F0221F98-5EF7-52AE-939C-DA37232F4E0A"
+                  }
+                }
+              }
+            }
+          },
+          "5AA3FBB1-EF05-56C5-B019-21660220CD35",
+          {
+            "id": "5AA3FBB1-EF05-56C5-B019-21660220CD35",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700006765.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "F299F935-1F07-5C67-9AC8-271C0A02F7B4"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "spaceItems": {
+                    "_0": "F0221F98-5EF7-52AE-939C-DA37232F4E0A"
+                  }
+                }
+              }
+            }
+          },
+          "F299F935-1F07-5C67-9AC8-271C0A02F7B4",
+          {
+            "id": "F299F935-1F07-5C67-9AC8-271C0A02F7B4",
+            "title": "Scratch",
+            "isUnread": false,
+            "createdAt": 700006888.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "5AA3FBB1-EF05-56C5-B019-21660220CD35",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://scratch.example.com/",
+                "savedTitle": "Scratch",
+                "timeLastActiveAt": 700006826.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+          {
+            "id": "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700006949.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "3E361BBF-D55F-547F-BF37-9B02399C05FA",
+              "2309449D-E6C4-595A-A946-5E86E9183CC9",
+              "82BCC187-BB75-521F-84F1-E6F228DF47F8",
+              "009A4761-ADA8-513D-9376-32AEEF9D67CB",
+              "215A4103-F1B8-5C7C-9B96-4DB4DE44ED66",
+              "AA15DB1B-B42D-5CBB-9062-D751607483E9"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "spaceItems": {
+                    "_0": "CB52A887-2201-5858-9888-31C127F090A7"
+                  }
+                }
+              }
+            }
+          },
+          "6EFBF6BA-ACE3-591D-ABF0-C4529E0751BF",
+          {
+            "id": "6EFBF6BA-ACE3-591D-ABF0-C4529E0751BF",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700007011.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "7E77C965-BFAC-56B3-BCDE-977359DDC0DF",
+              "2ABB436E-3F97-5F37-9FA8-8A4547487AE9",
+              "5801DBB6-D2D9-54D0-B5E4-A2B1A2BEC2DE",
+              "57091CBF-330A-5ED2-BB56-DB916ACB516C"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "spaceItems": {
+                    "_0": "CB52A887-2201-5858-9888-31C127F090A7"
+                  }
+                }
+              }
+            }
+          },
+          "3E361BBF-D55F-547F-BF37-9B02399C05FA",
+          {
+            "id": "3E361BBF-D55F-547F-BF37-9B02399C05FA",
+            "title": "Research home",
+            "isUnread": false,
+            "createdAt": 700007134.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://research.example.org/home",
+                "savedTitle": "Research home",
+                "timeLastActiveAt": 700007072.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "2309449D-E6C4-595A-A946-5E86E9183CC9",
+          {
+            "id": "2309449D-E6C4-595A-A946-5E86E9183CC9",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700007195.5,
+            "originatingDevice": null,
+            "parentID": "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+            "childrenIds": [
+              "2417BA96-662A-5CCA-A367-F2F41C51DDFA",
+              "F4D25724-B175-561B-BAD0-F7FDADC010CE"
+            ],
+            "data": {
+              "tabGroup": {
+                "title": "Reading list"
+              }
+            }
+          },
+          "2417BA96-662A-5CCA-A367-F2F41C51DDFA",
+          {
+            "id": "2417BA96-662A-5CCA-A367-F2F41C51DDFA",
+            "title": "Paper 1",
+            "isUnread": false,
+            "createdAt": 700007318.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2309449D-E6C4-595A-A946-5E86E9183CC9",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://papers.example.org/1",
+                "savedTitle": "Paper 1",
+                "timeLastActiveAt": 700007257.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "F4D25724-B175-561B-BAD0-F7FDADC010CE",
+          {
+            "id": "F4D25724-B175-561B-BAD0-F7FDADC010CE",
+            "title": "Paper 2",
+            "isUnread": false,
+            "createdAt": 700007441.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2309449D-E6C4-595A-A946-5E86E9183CC9",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://papers.example.org/2",
+                "savedTitle": "Paper 2",
+                "timeLastActiveAt": 700007380.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "82BCC187-BB75-521F-84F1-E6F228DF47F8",
+          {
+            "id": "82BCC187-BB75-521F-84F1-E6F228DF47F8",
+            "title": "Imported From Edge",
+            "isUnread": false,
+            "createdAt": 700007503.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+            "childrenIds": [
+              "EA154972-1880-58B7-9EE2-F5D8F1A4C5FA",
+              "4A212A85-5930-5AD4-97E3-252D1202E8D9"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "EA154972-1880-58B7-9EE2-F5D8F1A4C5FA",
+          {
+            "id": "EA154972-1880-58B7-9EE2-F5D8F1A4C5FA",
+            "title": "Tools",
+            "isUnread": false,
+            "createdAt": 700007564.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "82BCC187-BB75-521F-84F1-E6F228DF47F8",
+            "childrenIds": [
+              "4DBBEEDF-89EC-5A3B-98F4-DCC1B460B0AF",
+              "4DD0EE42-4B86-544D-8867-6E4E182C58B0",
+              "8A3B349D-339F-5271-824B-2863FF347527"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "4DBBEEDF-89EC-5A3B-98F4-DCC1B460B0AF",
+          {
+            "id": "4DBBEEDF-89EC-5A3B-98F4-DCC1B460B0AF",
+            "title": "Tool A",
+            "isUnread": false,
+            "createdAt": 700007687.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "EA154972-1880-58B7-9EE2-F5D8F1A4C5FA",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://tools.example.com/a",
+                "savedTitle": "Tool A",
+                "timeLastActiveAt": 700007626.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "4DD0EE42-4B86-544D-8867-6E4E182C58B0",
+          {
+            "id": "4DD0EE42-4B86-544D-8867-6E4E182C58B0",
+            "title": "Tool C",
+            "isUnread": false,
+            "createdAt": 700007810.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "EA154972-1880-58B7-9EE2-F5D8F1A4C5FA",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://tools.example.com/c",
+                "savedTitle": "Tool C",
+                "timeLastActiveAt": 700007749.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "8A3B349D-339F-5271-824B-2863FF347527",
+          {
+            "id": "8A3B349D-339F-5271-824B-2863FF347527",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700007933.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "EA154972-1880-58B7-9EE2-F5D8F1A4C5FA",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedMuteStatus": "allowAudio",
+                "timeLastActiveAt": 700007872.0,
+                "savedTitle": "Untitled draft"
+              }
+            }
+          },
+          "4A212A85-5930-5AD4-97E3-252D1202E8D9",
+          {
+            "id": "4A212A85-5930-5AD4-97E3-252D1202E8D9",
+            "title": "Shared X",
+            "isUnread": false,
+            "createdAt": 700008056.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "82BCC187-BB75-521F-84F1-E6F228DF47F8",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://shared.example.com/x",
+                "savedTitle": "Shared X",
+                "timeLastActiveAt": 700007995.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "009A4761-ADA8-513D-9376-32AEEF9D67CB",
+          {
+            "id": "009A4761-ADA8-513D-9376-32AEEF9D67CB",
+            "title": "Imported From Edge",
+            "isUnread": false,
+            "createdAt": 700008118.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+            "childrenIds": [
+              "93CF6767-FA36-55A8-ADF9-F901EAA1F356",
+              "703ECB68-3E3B-5C61-919B-56341FFF70EA"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "93CF6767-FA36-55A8-ADF9-F901EAA1F356",
+          {
+            "id": "93CF6767-FA36-55A8-ADF9-F901EAA1F356",
+            "title": "Tools",
+            "isUnread": false,
+            "createdAt": 700008179.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "009A4761-ADA8-513D-9376-32AEEF9D67CB",
+            "childrenIds": [
+              "63A2F6D9-DCEC-5781-97E9-D32AC723AC73",
+              "86DAEF95-A0DF-50F1-A51F-DD2F2BA4B8F0"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "63A2F6D9-DCEC-5781-97E9-D32AC723AC73",
+          {
+            "id": "63A2F6D9-DCEC-5781-97E9-D32AC723AC73",
+            "title": "Tool A",
+            "isUnread": false,
+            "createdAt": 700008302.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "93CF6767-FA36-55A8-ADF9-F901EAA1F356",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://tools.example.com/a",
+                "savedTitle": "Tool A",
+                "timeLastActiveAt": 700008241.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "86DAEF95-A0DF-50F1-A51F-DD2F2BA4B8F0",
+          {
+            "id": "86DAEF95-A0DF-50F1-A51F-DD2F2BA4B8F0",
+            "title": "Tool B",
+            "isUnread": false,
+            "createdAt": 700008425.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "93CF6767-FA36-55A8-ADF9-F901EAA1F356",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://tools.example.com/b",
+                "savedTitle": "Tool B",
+                "timeLastActiveAt": 700008364.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "703ECB68-3E3B-5C61-919B-56341FFF70EA",
+          {
+            "id": "703ECB68-3E3B-5C61-919B-56341FFF70EA",
+            "title": "Other Y",
+            "isUnread": false,
+            "createdAt": 700008548.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "009A4761-ADA8-513D-9376-32AEEF9D67CB",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://other.example.com/y",
+                "savedTitle": "Other Y",
+                "timeLastActiveAt": 700008487.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "215A4103-F1B8-5C7C-9B96-4DB4DE44ED66",
+          {
+            "id": "215A4103-F1B8-5C7C-9B96-4DB4DE44ED66",
+            "title": "Snippets",
+            "isUnread": false,
+            "createdAt": 700008610.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+            "childrenIds": [
+              "2BDBAF0A-D680-586B-815A-0FCC2BC62D72",
+              "87649A84-A5A3-5F5B-897B-F860054470DB"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "2BDBAF0A-D680-586B-815A-0FCC2BC62D72",
+          {
+            "id": "2BDBAF0A-D680-586B-815A-0FCC2BC62D72",
+            "title": "Snippet 1",
+            "isUnread": false,
+            "createdAt": 700008733.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "215A4103-F1B8-5C7C-9B96-4DB4DE44ED66",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://snip.example.com/1",
+                "savedTitle": "Snippet 1",
+                "timeLastActiveAt": 700008671.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "87649A84-A5A3-5F5B-897B-F860054470DB",
+          {
+            "id": "87649A84-A5A3-5F5B-897B-F860054470DB",
+            "title": "Blank snippet",
+            "isUnread": false,
+            "createdAt": 700008856.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "215A4103-F1B8-5C7C-9B96-4DB4DE44ED66",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedMuteStatus": "allowAudio",
+                "timeLastActiveAt": 700008794.5,
+                "savedTitle": "Blank snippet"
+              }
+            }
+          },
+          "AA15DB1B-B42D-5CBB-9062-D751607483E9",
+          {
+            "id": "AA15DB1B-B42D-5CBB-9062-D751607483E9",
+            "title": "Archive",
+            "isUnread": false,
+            "createdAt": 700008917.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "EB7C3D8A-68F1-5AEF-A86A-C8F87AE93B02",
+            "childrenIds": [
+              "07A7143C-6B0B-57B0-9AAD-500FF44E9230"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "07A7143C-6B0B-57B0-9AAD-500FF44E9230",
+          {
+            "id": "07A7143C-6B0B-57B0-9AAD-500FF44E9230",
+            "title": "Snippets",
+            "isUnread": false,
+            "createdAt": 700008979.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "AA15DB1B-B42D-5CBB-9062-D751607483E9",
+            "childrenIds": [
+              "341F9BCD-EED4-50EA-9FF9-C786B682E564",
+              "336ECE34-4A05-5A3D-A796-16BBF8BA1CAC"
+            ],
+            "data": {
+              "list": {}
+            }
+          },
+          "341F9BCD-EED4-50EA-9FF9-C786B682E564",
+          {
+            "id": "341F9BCD-EED4-50EA-9FF9-C786B682E564",
+            "title": "Snippet 1",
+            "isUnread": false,
+            "createdAt": 700009102.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "07A7143C-6B0B-57B0-9AAD-500FF44E9230",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://snip.example.com/1",
+                "savedTitle": "Snippet 1",
+                "timeLastActiveAt": 700009040.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "336ECE34-4A05-5A3D-A796-16BBF8BA1CAC",
+          {
+            "id": "336ECE34-4A05-5A3D-A796-16BBF8BA1CAC",
+            "title": "Blank snippet",
+            "isUnread": false,
+            "createdAt": 700009225.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "07A7143C-6B0B-57B0-9AAD-500FF44E9230",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedMuteStatus": "allowAudio",
+                "timeLastActiveAt": 700009163.5,
+                "savedTitle": "Blank snippet"
+              }
+            }
+          },
+          "7E77C965-BFAC-56B3-BCDE-977359DDC0DF",
+          {
+            "id": "7E77C965-BFAC-56B3-BCDE-977359DDC0DF",
+            "title": "Inbox",
+            "isUnread": false,
+            "createdAt": 700009348.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "6EFBF6BA-ACE3-591D-ABF0-C4529E0751BF",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://inbox.example.org/",
+                "savedTitle": "Inbox",
+                "timeLastActiveAt": 700009286.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "2ABB436E-3F97-5F37-9FA8-8A4547487AE9",
+          {
+            "id": "2ABB436E-3F97-5F37-9FA8-8A4547487AE9",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700009409.5,
+            "originatingDevice": null,
+            "parentID": "6EFBF6BA-ACE3-591D-ABF0-C4529E0751BF",
+            "childrenIds": [
+              "FEB2471E-35F3-5C8B-9D89-8F95C9D62F4E",
+              "2CEC1C97-14FE-5E18-AFB5-F829EFBCE1E1",
+              "8CAABD4B-CD9A-5529-B0C0-A78461504FA8"
+            ],
+            "data": {
+              "tabGroup": {
+                "title": "Trip planning"
+              }
+            }
+          },
+          "FEB2471E-35F3-5C8B-9D89-8F95C9D62F4E",
+          {
+            "id": "FEB2471E-35F3-5C8B-9D89-8F95C9D62F4E",
+            "title": "Flights",
+            "isUnread": false,
+            "createdAt": 700009532.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2ABB436E-3F97-5F37-9FA8-8A4547487AE9",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://flights.example.com/",
+                "savedTitle": "Flights",
+                "timeLastActiveAt": 700009471.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "2CEC1C97-14FE-5E18-AFB5-F829EFBCE1E1",
+          {
+            "id": "2CEC1C97-14FE-5E18-AFB5-F829EFBCE1E1",
+            "title": "Hotels",
+            "isUnread": false,
+            "createdAt": 700009655.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2ABB436E-3F97-5F37-9FA8-8A4547487AE9",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://hotels.example.com/",
+                "savedTitle": "Hotels",
+                "timeLastActiveAt": 700009594.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "8CAABD4B-CD9A-5529-B0C0-A78461504FA8",
+          {
+            "id": "8CAABD4B-CD9A-5529-B0C0-A78461504FA8",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700009778.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "2ABB436E-3F97-5F37-9FA8-8A4547487AE9",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedMuteStatus": "allowAudio",
+                "timeLastActiveAt": 700009717.0,
+                "savedTitle": "New Tab",
+                "activeTabBeforeCreationID": "2CEC1C97-14FE-5E18-AFB5-F829EFBCE1E1"
+              }
+            }
+          },
+          "5801DBB6-D2D9-54D0-B5E4-A2B1A2BEC2DE",
+          {
+            "id": "5801DBB6-D2D9-54D0-B5E4-A2B1A2BEC2DE",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700009840.0,
+            "originatingDevice": null,
+            "parentID": "6EFBF6BA-ACE3-591D-ABF0-C4529E0751BF",
+            "childrenIds": [
+              "CFC7B5FD-748C-5428-ABED-AA4EA5A1C048",
+              "3063B7F5-ED66-58A3-BE16-6739389B023C"
+            ],
+            "data": {
+              "tabGroup": {
+                "title": "Shopping"
+              }
+            }
+          },
+          "CFC7B5FD-748C-5428-ABED-AA4EA5A1C048",
+          {
+            "id": "CFC7B5FD-748C-5428-ABED-AA4EA5A1C048",
+            "title": "Cart",
+            "isUnread": false,
+            "createdAt": 700009963.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "5801DBB6-D2D9-54D0-B5E4-A2B1A2BEC2DE",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://shop.example.com/cart",
+                "savedTitle": "Cart",
+                "timeLastActiveAt": 700009901.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "3063B7F5-ED66-58A3-BE16-6739389B023C",
+          {
+            "id": "3063B7F5-ED66-58A3-BE16-6739389B023C",
+            "title": "Compare",
+            "isUnread": false,
+            "createdAt": 700010086.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "5801DBB6-D2D9-54D0-B5E4-A2B1A2BEC2DE",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://compare.example.com/",
+                "savedTitle": "Compare",
+                "timeLastActiveAt": 700010024.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "57091CBF-330A-5ED2-BB56-DB916ACB516C",
+          {
+            "id": "57091CBF-330A-5ED2-BB56-DB916ACB516C",
+            "title": "notes.txt",
+            "isUnread": false,
+            "createdAt": 700010209.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "6EFBF6BA-ACE3-591D-ABF0-C4529E0751BF",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "file:///Users/example/notes.txt",
+                "savedTitle": "notes.txt",
+                "timeLastActiveAt": 700010147.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "71849FEA-1AA2-5499-A091-8EA98001DB2D",
+          {
+            "id": "71849FEA-1AA2-5499-A091-8EA98001DB2D",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700010270.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "8F36660A-E1C8-558F-96BF-F54A5B15B21C",
+              "2DFA915F-3207-5A83-A4A0-1065D0CBC180"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "topApps": {
+                    "_0": {
+                      "default": true
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "8F36660A-E1C8-558F-96BF-F54A5B15B21C",
+          {
+            "id": "8F36660A-E1C8-558F-96BF-F54A5B15B21C",
+            "title": "Chat",
+            "isUnread": false,
+            "createdAt": 700010393.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "71849FEA-1AA2-5499-A091-8EA98001DB2D",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://chat.example.com/",
+                "savedTitle": "Chat",
+                "timeLastActiveAt": 700010332.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "2DFA915F-3207-5A83-A4A0-1065D0CBC180",
+          {
+            "id": "2DFA915F-3207-5A83-A4A0-1065D0CBC180",
+            "title": "Music",
+            "isUnread": false,
+            "createdAt": 700010516.5,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "71849FEA-1AA2-5499-A091-8EA98001DB2D",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://music.example.com/",
+                "savedTitle": "Music",
+                "timeLastActiveAt": 700010455.0,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          },
+          "1F66F655-F639-5F17-B52D-03BFB5C88A64",
+          {
+            "id": "1F66F655-F639-5F17-B52D-03BFB5C88A64",
+            "title": null,
+            "isUnread": false,
+            "createdAt": 700010578.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": null,
+            "childrenIds": [
+              "64F635BD-C51D-5FA6-AF8C-1CD1E0FB8963"
+            ],
+            "data": {
+              "itemContainer": {
+                "containerType": {
+                  "topApps": {
+                    "_0": {
+                      "custom": {
+                        "_0": {
+                          "directoryBasename": "Profile 1",
+                          "machineID": "SYNTHETIC-MACHINE"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "64F635BD-C51D-5FA6-AF8C-1CD1E0FB8963",
+          {
+            "id": "64F635BD-C51D-5FA6-AF8C-1CD1E0FB8963",
+            "title": "Bank",
+            "isUnread": false,
+            "createdAt": 700010701.0,
+            "originatingDevice": "SYNTHETIC-DEVICE-0001",
+            "parentID": "1F66F655-F639-5F17-B52D-03BFB5C88A64",
+            "childrenIds": [],
+            "data": {
+              "tab": {
+                "savedURL": "https://bank.example.com/",
+                "savedTitle": "Bank",
+                "timeLastActiveAt": 700010639.5,
+                "savedMuteStatus": "allowAudio"
+              }
+            }
+          }
+        ],
+        "topAppsContainerIDs": [
+          {
+            "default": true
+          },
+          "71849FEA-1AA2-5499-A091-8EA98001DB2D",
+          {
+            "custom": {
+              "_0": {
+                "directoryBasename": "Profile 1",
+                "machineID": "SYNTHETIC-MACHINE"
+              }
+            }
+          },
+          "1F66F655-F639-5F17-B52D-03BFB5C88A64"
+        ]
+      }
+    ]
+  },
+  "version": 1,
+  "sidebarSyncState": {
+    "container": {
+      "value": {
+        "orderedSpaceIDs": [
+          "7E9172F6-52E4-556C-A27C-7342A5055328",
+          "DE2B5428-FCB5-5105-80D0-B5435F2DF09D",
+          "F0221F98-5EF7-52AE-939C-DA37232F4E0A",
+          "CB52A887-2201-5858-9888-31C127F090A7"
+        ]
+      }
+    }
+  },
+  "firebaseSyncState": {
+    "syncData": {
+      "lastSyncedAt": 0
+    },
+    "userID": "SYNTHETIC-USER"
+  }
+}
