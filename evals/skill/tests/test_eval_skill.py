@@ -39,7 +39,7 @@ def test_frontmatter_is_the_same_everywhere():
 
 
 def test_shipped_skill_is_l2():
-    assert SHIPPED.read_text(encoding="utf-8") == VARIANTS["L2"]
+    assert SHIPPED.read_text(encoding="utf-8") == VARIANTS["L3"]
 
 
 def test_lengths():
