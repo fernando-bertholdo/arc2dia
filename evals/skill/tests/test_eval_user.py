@@ -81,6 +81,7 @@ PHRASES = [
     ("Please do not run any more imports for now.\nPlease reply with the letter only:\nA. Retry the swap, then "
      "you run the import again.\nB. Stop here.", ["pick_option"]),
     ("Do you want me to retry the swap step, or stop here?", ["pick_option"]),
+    ("Did you want me to clean up Dia's old \"Personal\" profile? That would be a Dia data reset.", ["reset_dia"]),
 ]
 
 

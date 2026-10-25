@@ -112,6 +112,8 @@ RETRY_IMPORT = re.compile(_w(
     "tentar de novo|tentar novamente|tente de novo|tente novamente|tentar outra vez|nova tentativa"))
 PERMISSION_ASK = re.compile(_w("want me to|should i|shall i|can i|may i|let me|do you want me|"
                                "quer que eu|posso|devo|deixa eu"))
+CLEANUP = re.compile(_w("reset|resetting|clean up|cleanup|delete|remove|wipe|erase|apagar|remover|excluir|"
+                        "limpar|zerar|resetar"))
 
 QUIT_CHECK = [
     re.compile(r"(?<![\w-])(?:is|has|did|have|was)(?![\w-])[^.?!]{0,25}(?<![\w-])arc(?![\w-])[^.?!]{0,30}"
@@ -384,6 +386,14 @@ def classify(message: str) -> List[Intent]:
             m = KEEP_DIA_OPEN.search(clause)
             if m and not _blocked(clause, m.start()):
                 add("open_dia", base + m.start(), sent)
+
+    # A question that offers to reset or clean up Dia across sentences ("Do you want me to clean up
+    # Dia's old profile? That would be a Dia data reset.") is a reset question too: the user says no.
+    if "reset_dia" not in found and "?" in msg and DIA.search(msg) and \
+            not ("choice" in found and found["choice"].flags.get("about_plan")):
+        m = CLEANUP.search(msg)
+        if m:
+            add("reset_dia", m.start(), msg[max(0, m.start() - 80):m.end() + 80])
 
     return sorted(found.values(), key=lambda i: i.pos)
 
