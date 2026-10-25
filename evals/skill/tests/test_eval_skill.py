@@ -38,7 +38,7 @@ def test_frontmatter_is_the_same_everywhere():
     assert 100 < len(fm["description"]) <= 1024 and "Use when" in fm["description"]
 
 
-def test_shipped_skill_is_l2():
+def test_shipped_skill_is_l3():
     assert SHIPPED.read_text(encoding="utf-8") == VARIANTS["L3"]
 
 
