@@ -48,6 +48,12 @@ user's browsing data: do not paste them in full or share them.
    when the user stops halfway. Never finish while `A2D status` shows `ACTIVE SWAP`.
 7. Resetting Dia (moving its data aside) happens only if the user explicitly says yes. Default:
    import into the existing Dia.
+8. If the app's permission or safety check blocks a command (often `swap --apply`, because it
+   moves Arc's file), never work around it with another command. Tell the user what the command
+   does and that `A2D restore --apply` puts the original back byte for byte, ask them to approve
+   it, and try again only after they did.
+9. Never ask the user to run Dia's import while `A2D status` shows no active swap: Dia would
+   import the uncleaned file and add a second set of profiles.
 
 To check whether Arc runs, use `A2D status` (or `pgrep -x Arc`). Do not use
 `tell application "Arc"`, which starts Arc.
@@ -212,6 +218,7 @@ Say (template), and write it down if asked:
 | swap refused: swap already active | `a swap is already active` | An earlier swap was never restored: `A2D restore --apply`, `A2D status`, then continue. |
 | restore refused: Arc running | `Arc is running` during restore | Ask the user to quit Arc, then restore. Tell them Arc ran while the cleaned file was in place (Sync risk). |
 | restore warns about unexpected content | `Warning: the file changed while swapped` | Go ahead with `restore --apply`; that version is kept in the backup folder. Tell the user Arc or another tool wrote the file. |
+| A command is blocked by a permission check | The tool result says permission was denied or the action was blocked | Do not try it another way (safety rule 8). Tell the user, for example: "My permission check blocked `swap --apply`. It moves Arc's sidebar file into a backup folder and puts the cleaned copy in its place; `restore --apply` puts the original back byte for byte. Please approve it, and tell me when I can try again." Do not ask for Dia's import until `A2D status` shows `ACTIVE SWAP`. |
 | verify cannot reach Dia | `Dia is not running` or `Dia has no open window` | Ask the user to open Dia with a window, and to allow automation if macOS asks, then run verify again. |
 | prepare validation failed | Exit code 1, `Validation: FAILED` | Do not swap. Read `~/arc2dia-out/report.txt`, adjust the plan, prepare again with `--force`. |
 | python3 missing | `command not found: python3` | Ask the user to install the Command Line Tools (`xcode-select --install`, they confirm the dialog), then continue. |

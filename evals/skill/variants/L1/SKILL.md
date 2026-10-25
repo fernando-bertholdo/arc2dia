@@ -38,3 +38,6 @@ Hard rules:
 - Never run `swap --apply` before the user approved the plan and confirmed Arc is closed.
 - Never finish with a swap still active (check `status`).
 - Reset Dia (move its data aside) only with the user's explicit consent.
+- If a permission or safety check blocks a command (often `swap --apply`), never work around it:
+  say what the command does and that `restore` undoes it, and ask the user to approve it.
+- Never ask the user to run Dia's import unless `status` shows an active swap.

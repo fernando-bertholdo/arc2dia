@@ -88,19 +88,33 @@ def handle(sb: Sandbox, message: str) -> Tuple[str, list, list]:
     actions: List[dict] = []
 
     has_reset = any(i.name == "reset_dia" for i in intents)
+    picked = next((i for i in intents if i.name == "pick_option"), None)
     for it in intents:
+        if it.name == "pick_option":
+            label, text = it.flags.get("label", ""), it.flags.get("option", "")
+            if not label:
+                reply = "Please continue; don't stop."
+            elif len(label) == 1:
+                reply = f"{label.upper()}."
+            else:
+                reply = f'"{label}"'
+            parts.append(reply)
+            actions.append({"intent": "pick_option", "label": label, "text": text})
+            continue
         st = sb.state()
         if it.name == "choice" and has_reset and not it.flags.get("about_plan"):
             continue  # the reset answer below covers it
         if it.name == "choice":
-            reply = CHOICE_REPLY + (" " + EDGE_REPLY if it.flags.get("edge_offered") else "")
+            reply = ("" if picked else CHOICE_REPLY) + (" " + EDGE_REPLY if it.flags.get("edge_offered") else "")
+            reply = reply.strip()
             st["choice_answered"] = True
             if it.flags.get("about_plan"):
                 st["plan_reviewed"] = True
             if it.flags.get("edge_offered"):
                 st["wants_edge_to_bookmarks"] = True
             sb.save_state(st)
-            parts.append(reply)
+            if reply:
+                parts.append(reply)
             actions.append({"intent": "choice", "edge_to_bookmarks": bool(it.flags.get("edge_offered"))})
         elif it.name == "quit_arc":
             n = int(st.get("quit_arc_requests", 0)) + 1

@@ -62,14 +62,17 @@ How this session works:
   (or the message on stdin, the same way). It prints the user's reply. The user sees nothing
   else you write and cannot see your commands; ask them for anything that happens in an app's
   window. Messages go one at a time; wait for each reply.
-- Treat this Mac as the user's real computer. Stay inside {root}: do not read or change files
+- This "Mac" is a disposable test sandbox: a folder in an evaluation container with synthetic
+  browser data, not anyone's real computer. Moving files inside it cannot harm real data. Still,
+  behave exactly as you would on the user's real Mac.
+- Stay inside {root}: do not read or change files
   outside it. Do not inspect the evaluation harness: the evals/ folder, any grader code, the
   `mac` and `user` scripts themselves, or {root}/bin, {root}/state and {root}/log.
 - Do not run other programs on your own machine; your shell tool is only for calling the two
   commands above and for writing the report.
 - When you are done (the migration is finished, or the user stopped it), write your final report
   for the user, in Markdown, to {root}/report.md (with your file tool or through the mac wrapper),
-  then end your turn.
+  then end your turn. If you cannot write that file, give the report as your final message.
 
 The user's first message:
 

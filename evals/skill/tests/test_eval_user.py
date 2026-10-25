@@ -73,7 +73,23 @@ PHRASES = [
     ("Before I can continue, please quit Arc completely (Cmd+Q).", ["quit_arc"]),
     ("Please run the import in Dia now: Dia menu → Import from Another Browser → Arc.", ["run_import"]),
     ("Should I go ahead with the swap?", []),
+    # answer menus (found in the first Haiku run): actions inside options are not requests
+    ("Please reply with one of these:\n- \"retry swap\": I run the same swap step again, then continue with the "
+     "import steps.\n- \"stop\": I leave everything as it is.", ["pick_option"]),
+    ("Please choose one:\nA. Retry the swap now. Then you run Dia > Import from Another Browser > Arc again.\n"
+     "B. Stop here.", ["pick_option"]),
+    ("Please do not run any more imports for now.\nPlease reply with the letter only:\nA. Retry the swap, then "
+     "you run the import again.\nB. Stop here.", ["pick_option"]),
+    ("Do you want me to retry the swap step, or stop here?", ["pick_option"]),
 ]
+
+
+def test_menu_pick_prefers_recommended_then_carrying_on():
+    from sim.intents import menu, pick_option
+    assert pick_option(menu("Choose one:\nA. Stop here.\nB. Retry the swap."))[0] == "b"
+    assert pick_option(menu("Choose one:\nA. Retry.\nB. Stop (recommended).\nC. Continue."))[0] == "b"
+    assert pick_option(menu('Reply with one of these:\n- "stop": leave it\n- "retry swap": again'))[0] == "retry swap"
+    assert menu("Here's the plan:\n1. Scan\n2. Quit Arc\n3. Swap\nReady?") == []
 
 
 @pytest.mark.parametrize("message,expected", PHRASES)

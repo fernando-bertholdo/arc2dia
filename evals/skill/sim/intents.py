@@ -165,6 +165,47 @@ OPEN_ARC_BLOCK = re.compile(_w("after|until|till|once|when|before|only|if|não|n
                                "depois|até|quando|antes|só|somente|apenas|se|yet|ainda|so"))
 
 
+# An answer menu: two or more option lines plus a cue to pick one ("Reply with one of these",
+# "Please choose", "A or B"). Actions written inside the options ("A. Retry the swap, then you run
+# the import again") are not requests: the user picks an option instead.
+OPTION_LINE = re.compile(
+    r"(?m)^[ \t]*(?:[-*•][ \t]*)?(?:(?:option|opção|opcao)[ \t]+)?"
+    r"(?:\(?(?P<letter>[a-d1-4])[.):][ \t]+|\"(?P<quoted>[^\"\n]{2,40})\"[ \t]*[:–—-][ \t]*)(?P<text>.+)$")
+MENU_CUE = re.compile(_w(
+    "reply with|respond with|answer with|choose|pick|select|one of these|which option|which one|the letter|"
+    "a or b|a/b|escolha|responda com|qual opção|qual opcao|uma destas|uma dessas|uma das opções|uma das opcoes"))
+OPTION_GOOD = re.compile(_w(
+    "retry|try again|continue|proceed|go ahead|apply|yes|do it|finish|resume|run the swap|redo|"
+    "continuar|prosseguir|tentar|tente|sim|seguir|refazer|aplicar"))
+OPTION_BAD = re.compile(_w(
+    "stop|cancel|abort|leave everything|nothing else|give up|end here|quit the migration|"
+    "parar|pare|cancelar|abortar|desistir|deixar como está|deixar como esta"))
+OPTION_REC = re.compile(_w("recommended|recommend|recomendado|recomendo|recomendada"))
+# "Do you want me to retry the swap, or stop here?" without a menu.
+CONTINUE_OR_STOP = re.compile(
+    r"(?:retry|try again|continue|proceed|go on|keep going|tentar|continuar|prosseguir)[^?]{0,80}"
+    r"(?<![\w-])(?:or|ou)(?![\w-])[^?]{0,40}(?:stop|cancel|abort|leave|parar|cancelar|deixar)")
+
+
+def menu(message: str):
+    """The options of an answer menu, or [] when the message has none."""
+    msg = normalize(message)
+    opts = [m for m in OPTION_LINE.finditer(msg)]
+    if len(opts) < 2 or not MENU_CUE.search(msg):
+        return []
+    return opts
+
+
+def pick_option(opts) -> Tuple[str, str]:
+    """The option the simulated user picks: the recommended one, else the one that carries on."""
+    def score(m):
+        t = (m.group("quoted") or "") + " " + m.group("text")
+        return (6 if OPTION_REC.search(t) else 0) + (2 if OPTION_GOOD.search(t) else 0) - (3 if OPTION_BAD.search(t) else 0)
+    best = max(opts, key=score)  # max keeps the first of equal scores
+    label = best.group("letter") or best.group("quoted")
+    return label, best.group("text").strip()
+
+
 def normalize(text: str) -> str:
     t = text.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
     t = t.replace("…", " ").replace(" ", " ")
@@ -255,6 +296,16 @@ def classify(message: str) -> List[Intent]:
         add("choice", m.start() if m else 0, msg[:200],
             edge_offered=bool(EDGE.search(msg) and BOOKMARKS.search(msg)),
             about_plan=bool(PLAN_TOPIC.search(msg)))
+
+    opts = menu(message)
+    if opts:
+        label, text = pick_option(opts)
+        add("pick_option", opts[0].start(), msg[opts[0].start():opts[-1].end()], label=label, option=text)
+        for m in opts:  # keep positions, drop the option text
+            msg = msg[:m.start()] + " " * (m.end() - m.start()) + msg[m.end():]
+    elif CONTINUE_OR_STOP.search(msg) and "?" in msg:
+        m = CONTINUE_OR_STOP.search(msg)
+        add("pick_option", m.start(), m.group(0), label="", option="continue")
 
     for s_pos, sent in sentences(msg):
         has_import = bool(IMPORT_WORD.search(sent))

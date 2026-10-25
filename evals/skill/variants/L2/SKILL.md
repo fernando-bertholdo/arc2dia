@@ -47,6 +47,12 @@ not paste them in full or share them. To check whether Arc runs, use `A2D status
 7. Resetting Dia (moving its data aside: the "Optional: start from a fresh Dia" commands that
    `swap` prints) happens only if the user explicitly says yes. Default: import into the existing
    Dia.
+8. If the app's permission or safety check blocks a command (often `swap --apply`, because it
+   moves Arc's file), never work around it with another command. Tell the user what the command
+   does and that `A2D restore --apply` puts the original back byte for byte, ask them to approve
+   it, and try again only after they did.
+9. Never ask the user to run Dia's import while `A2D status` shows no active swap: Dia would
+   import the uncleaned file and add a second set of profiles.
 
 ## Procedure
 
@@ -125,5 +131,7 @@ Do the steps in order. Each checkpoint must hold before you go on.
   (with the same options) and `A2D prepare --plan arc2dia-plan.json --force`, tell the user if the
   numbers changed, and continue from step 4.
 - **The user wants to open Arc mid-flow:** restore first (step 7); then Arc may be opened.
+- **A command is blocked by a permission check:** follow safety rule 8; do not continue the
+  procedure, and never ask for Dia's import, until the swap has really happened.
 - **verify cannot reach Dia:** ask the user to open a Dia window (and allow automation if macOS
   asks), then run verify again.
