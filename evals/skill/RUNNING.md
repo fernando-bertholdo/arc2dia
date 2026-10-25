@@ -183,4 +183,4 @@ reset-dia, abandon-after-failure) and must fail exactly the expected checks
   the agent's shell) to the sandbox home; the `rewritten` field of the command log shows it.
 - Dia's importer is modelled from observed behaviour, not a spec (new profiles with " 2" on a name
   clash, folders flattened, Favorites copied, open tabs and non-web links dropped, tabs without a
-  URL skipped).
+  URL skipped, tabs inside pinned split views and tab groups dropped).

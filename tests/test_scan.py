@@ -54,7 +54,8 @@ def test_prediction_matches_dia_behaviour(rich_sb):
     assert p.nested_groups == 11
     assert p.open_tabs_lost == 7          # gap 1: open tabs are not imported
     assert p.non_web_dropped == 4
-    assert p.loose_pinned_tabs == 3 and p.tabs_in_groups == 21
+    # The split view's two tabs are dropped (seen in a real migration test).
+    assert p.loose_pinned_tabs == 1 and p.tabs_in_groups == 21 and p.wrapped_tabs_lost == 2
 
 
 def test_favorites_and_sync(rich_sb):

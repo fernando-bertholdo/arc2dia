@@ -79,10 +79,18 @@ class Oracle:
         if code != 0:
             raise RuntimeError("swap failed:\n" + out)
 
+    def check_swap(self) -> None:
+        """Right before and right after Dia's import: Arc quit, the cleaned copy still in place."""
+        _, out = self.a2d("status")
+        if "Arc: not running" not in out or "still the installed cleaned copy" not in out or "WARNING" in out:
+            raise RuntimeError("the swap is not intact:\n" + out)
+
     def run_import(self) -> bool:
+        self.check_swap()
         reply = self.user("The cleaned file is in place. Please open Dia, choose Dia > Import from Another "
                           "Browser… > Arc, and wait until the new profiles appear. Keep Arc closed. Tell me when "
                           "it has finished, or what error Dia shows.")
+        self.check_swap()
         if "error" not in reply.lower():
             return True
         return self.after_failed_import()
@@ -91,6 +99,7 @@ class Oracle:
         reply = self.user("Dia's import did not work. The cleaned file is still in place, so you can try once "
                           "more right away. Could you please try the import again (Dia > Import from Another "
                           "Browser… > Arc)?")
+        self.check_swap()
         return "error" not in reply.lower()
 
     def restore(self) -> None:

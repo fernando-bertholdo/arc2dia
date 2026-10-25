@@ -25,6 +25,8 @@ Run the tool from the home folder, where it keeps its files:
 4. Ask the user to quit Arc completely; `status` must show `Arc: not running`.
 5. `swap`, then `swap --apply`.
 6. Ask the user to run Dia > Import from Another Browser… > Arc and tell you how it went.
+   Right before asking, and right after, run `status`: Arc must not be running and the cleaned
+   copy must still be in place; if Arc runs, ask the user to quit it (Arc > Quit Arc), never kill it.
 7. `restore`, then `restore --apply`, always: also when the import failed or the user stops.
 8. `verify --prepared arc2dia-out`, with Dia open.
 9. Report: what is in Dia, that Arc's file was restored, where the backup is.

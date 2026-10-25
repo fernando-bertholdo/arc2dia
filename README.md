@@ -7,10 +7,10 @@ prepares a cleaned copy of Arc's sidebar file, lets the official importer read t
 puts your original file back, byte for byte. It is written in plain Python 3.9+ with no
 dependencies and no network access.
 
-Status: v0. The cleaning approach was used in a real migration (Dia imported the cleaned file as
-expected), and `scan`, `prepare` and `verify` were checked against real Arc and Dia data. The
-`swap` and `restore` commands are covered by tests but have not yet run end to end on a real Mac.
-Arc's and Dia's formats are undocumented and may change. Read the safety notes before you use it.
+Status: v0. The full workflow (scan, plan, prepare, swap, Dia's import, restore, verify) ran end to
+end on a real Mac with real Arc and Dia data, and again with the synthetic example through
+`swap --allow-other-source`. Both times `restore` put the original file back byte for byte. Arc's
+and Dia's formats are undocumented and may change. Read the safety notes before you use it.
 
 ## Quick start
 
@@ -18,9 +18,11 @@ Arc's and Dia's formats are undocumented and may change. Read the safety notes b
 git clone https://github.com/fernando-bertholdo/arc2dia.git && cd arc2dia
 python3 -m arc2dia scan                      # see what Dia's importer would do (read-only)
 python3 -m arc2dia prepare                   # write a cleaned copy to arc2dia-out/
-# quit Arc, then:
+# quit Arc (Arc > Quit Arc; closing its window is not enough), then:
 python3 -m arc2dia swap --apply              # put the cleaned copy in Arc's place
+python3 -m arc2dia status                    # Arc not running, cleaned copy in place, no WARNING
 # in Dia: Dia > Import from Another Browser... > Arc, and wait for it to finish
+python3 -m arc2dia status                    # same check again
 python3 -m arc2dia restore --apply           # put your original Arc file back
 python3 -m arc2dia verify --prepared arc2dia-out
 ```
@@ -70,9 +72,10 @@ it only changes what the importer sees.
 | --- | --- | --- |
 | Space | New Profile (every import creates new ones) | Same; a space can also be left out |
 | Pinned tabs | Pinned tabs, unloaded until clicked | Same |
+| Pinned split views and Arc tab groups | Their tabs are dropped (seen in a real migration test) | Unwrapped: their tabs take the wrapper's place, in order |
 | Top-level folder | Pinned Tab Group | Same |
 | Nested folder | Its own flat group, named after itself only | Your choice of four strategies (below) |
-| Open (Today) tabs, including Arc tab groups | Not imported | Moved into one pinned folder, "Open tabs from Arc"; tab groups are flattened or become subfolders |
+| Open (Today) tabs, including Arc tab groups | Not imported | Moved into one pinned folder, "Open tabs from Arc"; split views and tab groups are flattened (tab groups can become subfolders instead) |
 | Duplicate folder trees | Imported twice | Optionally removed when every URL survives elsewhere |
 | Favorites | Kept | Not touched |
 | `file:`, `data:`, `javascript:`, `chrome-extension:` links | Dropped | Reported; optionally exported to `bookmarks.html` |
@@ -136,7 +139,15 @@ arc2dia prepare --plan arc2dia-plan.json
 arc2dia scan --tree --sidebar arc2dia-out/StorableSidebar.cleaned.json   # inspect the result
 ```
 
-**4. Quit Arc** completely (Arc > Quit Arc). Leave it closed until the restore in step 8 is done.
+**4. Quit Arc** completely: Arc > Quit Arc, or Cmd+Q. Closing Arc's window does not quit Arc; it
+keeps running in the background. Leave it quit until the restore in step 8 is done.
+
+Other apps and automation (scripts, agents, launchers) can start Arc in the background, without a
+window. In a real test this happened while the cleaned file was in place: Arc ran for about 25
+minutes with Sync on and rewrote the sidebar (`restore` noticed and kept that version in the
+backup). Pause such tools until the restore. If you can, turn off Arc's sync before you start; it
+is the safest choice, because a stray Arc then cannot upload the cleaned sidebar to your other
+devices. Arc may rewrite its sidebar file when you change that setting, so do it before step 2.
 
 **5. Swap.** Without `--apply` this only prints what it would do.
 
@@ -163,9 +174,15 @@ defaults delete company.thebrowser.dia
 To undo it later, quit Dia, move the new `Dia` folder aside, move the saved one back, and run
 `defaults import company.thebrowser.dia "$HOME/dia-reset-backup/company.thebrowser.dia.plist"`.
 
-**7. Import in Dia.** Open Dia and choose Dia > Import from Another Browser... > Arc (a fresh Dia
-offers it during onboarding). Wait until the new profiles appear. Imported pinned tabs only load
-when you click them; do not open them all at once.
+**7. Import in Dia.** Right before you start, run `arc2dia status`. It must show
+`Arc: not running` and `the sidebar file is still the installed cleaned copy`, with no `WARNING`
+line. Then open Dia and choose Dia > Import from Another Browser... > Arc (a fresh Dia offers it
+during onboarding). Wait until the new profiles appear. Imported pinned tabs only load when you
+click them; do not open them all at once.
+
+When the import is done, run `arc2dia status` again. If Arc is running, quit it (Arc > Quit Arc).
+If status warns that the file no longer matches the cleaned copy, Arc or another program wrote it
+and Dia may have read that version: restore (step 8), then start again from step 2.
 
 **8. Restore** the original Arc file. Again, dry run first.
 
@@ -185,11 +202,15 @@ arc2dia verify --prepared arc2dia-out
 ```
 
 Differences that are expected are explained: non-web links Dia drops, open tabs you chose to leave,
-Favorites, tabs you opened after the import, URLs that differ only by a trailing slash. Anything
-else is listed as missing. If a profile name does not match its space, pair them with
-`--map "Arc space=Dia profile"`.
+tabs left inside pinned split views or tab groups, Favorites, tabs you opened after the import,
+URLs that differ only by a trailing slash. GitHub pull requests that Dia does not list are shown
+under "expected, probably", since Dia may show them as Live items instead of tabs. Anything else
+is listed as missing. With `--prepared`, Favorites are compared with the cleaned file, so the
+check also fits a test run with `swap --allow-other-source`. If a profile name does not match its
+space, pair them with `--map "Arc space=Dia profile"`.
 
-**10. Open Arc again.** `arc2dia status` tells you at any time whether a swap is still active.
+**10. Open Arc again.** `arc2dia status` tells you at any time whether a swap is still active,
+and warns when the sidebar file changed while it was.
 
 ## Folder strategies
 
@@ -208,11 +229,18 @@ Imported From Edge          1 tab
 | `merge-to-top` | One group, "Imported From Edge", with all four tabs in their original order |
 | `to-bookmarks` | Nothing in the sidebar; the whole tree, nested, goes to `bookmarks.html` |
 
-Arc tab groups in the pinned area count as folders for every strategy. A strategy applies to a
-space's top-level folders. Each top-level folder can have its own
+A strategy applies to a space's top-level folders. Each top-level folder can have its own
 strategy, and a nested folder can be sent to `to-bookmarks` on its own; its parent folders are
 recreated in `bookmarks.html` so it keeps its place. When `plan` is run without `--strategy`, spaces
 with nested folders get `path-names` and the others `keep`.
+
+Dia's importer drops the tabs inside split views and Arc tab groups in the pinned area (seen in a
+real migration test). By default `prepare` therefore unwraps them before it applies the strategy:
+their tabs take the wrapper's place in the same folder, in order, and the wrapper goes away (a tab
+group's name is not kept). Duplicate detection and `to-bookmarks` still treat a pinned tab group as
+a folder, so an exported tab group keeps its name in `bookmarks.html`. With
+`"pinned_wrappers": "keep"` (`--keep-pinned-wrappers`), tab groups count as folders for every
+strategy, and `prepare` warns that Dia will drop their tabs.
 
 When two exported trees share a name, such as two "Imported From Edge" imports, they become one
 folder in `bookmarks.html`, with repeated URLs kept once per folder (`merge_bookmark_folders`).
@@ -234,8 +262,9 @@ the list of top-level folders with their ids) and are ignored when the plan is r
 | `dedupe_urls` | remove repeated URLs in the pinned area, keeping the first copy | `false` |
 | `open_tabs` | `pinned-folder`, `bookmarks` or `leave` | `pinned-folder` |
 | `open_tabs_folder_name` | any name | `Open tabs from Arc` |
-| `open_tabs_split_views` | `flatten` (split views become separate tabs) or `keep` | `flatten` |
+| `open_tabs_split_views` | `flatten` (split views become separate tabs) or `keep` (Dia then drops their tabs) | `flatten` |
 | `open_tabs_tab_groups` | `flatten` (tabs from Arc tab groups go straight into the folder, in order) or `subfolders` (one subfolder per group; Dia then shows each as its own flat group) | `flatten` |
+| `pinned_wrappers` | `unwrap` (split views and tab groups in the pinned area are replaced by their tabs, in order) or `keep` (Dia drops their tabs) | `unwrap` |
 | `drop_empty_folders` | remove folders left with nothing in them | `true` |
 | `non_web` | `keep` (Dia drops them) or `to-bookmarks` | `keep` |
 | `merge_bookmark_folders` | in `bookmarks.html`, merge sibling folders with the same name and keep one copy of a URL per folder | `true` |
@@ -293,7 +322,8 @@ kept as they are; whether Dia imports them is unknown. Non-web links are dropped
 Dia unless you export them to `bookmarks.html`.
 
 If Arc is opened while the cleaned file is in place and Sync is on, the cleaned sidebar may reach
-your other devices. `restore` puts the local file back, but it cannot undo a sync. Keep Arc closed.
+your other devices. `restore` puts the local file back, but it cannot undo a sync. Keep Arc quit,
+and turn off Arc's sync before you start if you can.
 
 arc2dia is an independent project. It is not affiliated with, endorsed by or supported by The
 Browser Company or Atlassian. Arc and Dia are their trademarks.

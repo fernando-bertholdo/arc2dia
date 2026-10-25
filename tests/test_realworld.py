@@ -105,7 +105,7 @@ def test_pinned_tab_group_counts_as_a_folder():
 
 def test_pinned_tab_group_with_path_names():
     sb, group = nested_group_sidebar()
-    out = transform(sb, make_plan(sb, folder_strategy="path-names")).sidebar
+    out = transform(sb, make_plan(sb, folder_strategy="path-names", pinned_wrappers="keep")).sidebar
     obj = out.items[group]
     assert obj["title"] == "Outer › Inner group"
     assert obj["data"]["tabGroup"]["title"] == "Outer › Inner group"

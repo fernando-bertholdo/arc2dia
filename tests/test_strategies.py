@@ -12,7 +12,7 @@ from arc2dia.transform import FATE_BOOKMARKS, FATE_DEDUPED, FATE_DROPPED, FATE_S
 from arc2dia.validate import structure_problems
 from conftest import find_folder, folder_children_urls, make_plan, pinned_children, space_by_title
 
-PLAIN = dict(dedupe_trees=False, drop_empty_folders=False, open_tabs="leave")
+PLAIN = dict(dedupe_trees=False, drop_empty_folders=False, open_tabs="leave", pinned_wrappers="keep")
 
 
 def run(sb, **kw):
@@ -31,7 +31,7 @@ def pinned_folders(sb, title):
 
 def test_keep_with_no_options_changes_nothing(rich_sb, rich_raw):
     res = run(rich_sb, folder_strategy="keep", dedupe_trees=False, dedupe_urls=False, open_tabs="leave",
-              drop_empty_folders=False, non_web="keep")
+              drop_empty_folders=False, non_web="keep", pinned_wrappers="keep")
     assert json.loads(res.sidebar.dumps()) == rich_raw
     assert {e.fate for e in res.ledger} == {FATE_SIDEBAR}
 

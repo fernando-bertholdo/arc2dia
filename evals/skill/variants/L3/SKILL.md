@@ -158,6 +158,10 @@ Checkpoint: the output says `Done. The original is safe in …` and `A2D status`
 
 ### 6. Import (the user does it)
 
+Right before you ask for the import, and right after the user answers, run `A2D status`: it must
+show `Arc: not running` and `still the installed cleaned copy`. If Arc is running, ask the user
+to quit it (Arc > Quit Arc); never kill it.
+
 Say (template):
 
 > The cleaned file is in place. Please open Dia, choose Dia > Import from Another Browser… > Arc,

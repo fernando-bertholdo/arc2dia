@@ -13,6 +13,13 @@ from .model import KIND_TAB, Sidebar, Space, tab_url
 
 INTERNAL_SCHEMES = ("dia", "chrome", "about", "chrome-extension", "chrome-search", "devtools", "arc", "")
 
+# Dia turns some GitHub pull-request tabs into "Live" items, which its AppleScript does not list as
+# tabs (seen once in a real migration). Such a URL missing from Dia is probably expected.
+GITHUB_PULL = re.compile(r"^https?://(www\.)?github\.com/[^/?#]+/[^/?#]+/pull/\d+(?:[/?#].*)?$", re.I)
+WRAPPED_EXPLANATION = ("was inside a pinned split view or tab group; Dia's importer drops these "
+                       "(seen in a real migration test)")
+GITHUB_PULL_EXPLANATION = "Dia may show GitHub pull requests as Live items instead of tabs"
+
 
 @dataclass
 class UrlDiff:
@@ -20,6 +27,7 @@ class UrlDiff:
     count: int
     explanation: str
     expected: bool = True  # False when the difference is unexplained
+    probable: bool = False  # explained, but only probably (listed under "expected, probably")
 
 
 @dataclass
@@ -72,6 +80,21 @@ def _web_counter(sb: Sidebar, root: Optional[str]) -> Counter:
     return c
 
 
+def _wrapped_web_counter(sb: Sidebar, root: Optional[str]) -> Counter:
+    """Web URLs of the tabs inside split views or tab groups below ``root``."""
+    c: Counter = Counter()
+    for item_id in sb.wrapped_ids(root):
+        if sb.kind(item_id) == KIND_TAB:
+            url = tab_url(sb.items[item_id])
+            if url and U.is_web(url):
+                c[U.normalize(url)] += 1
+    return c
+
+
+def is_github_pull(url: str) -> bool:
+    return bool(GITHUB_PULL.match(url or ""))
+
+
 def _non_web_count(sb: Sidebar, root: Optional[str]) -> int:
     return sum(1 for e in sb.walk(root) if e.kind == KIND_TAB and tab_url(e.obj) and not U.is_web(tab_url(e.obj)))
 
@@ -107,14 +130,17 @@ def verify(
     mapping: Optional[Dict[str, str]] = None,
 ) -> VerifyReport:
     """``expected_sb`` is what Dia was given (the cleaned file, or the original when no
-    prepare was used). ``original_sb`` is the untouched Arc file, used to explain differences."""
+    prepare was used). ``original_sb`` is the untouched Arc file, used to explain differences.
+    In "prepared" mode the expected Favorites come from ``expected_sb``: the cleaned file keeps
+    the Favorites of the file it was prepared from, while the current Arc file may be another one
+    (after ``swap --allow-other-source``) or may have changed since."""
     mapping = mapping or {}
     orig = original_sb or expected_sb
     used: Set[int] = set()
     results: List[SpaceVerify] = []
 
     fav_urls: Set[str] = set()
-    for _, entry in orig.favorite_entries():
+    for _, entry in (expected_sb if mode == "prepared" else orig).favorite_entries():
         if entry.kind == KIND_TAB and tab_url(entry.obj):
             fav_urls.add(U.normalize(tab_url(entry.obj)))
     space_of_url: Dict[str, str] = {}
@@ -128,6 +154,7 @@ def verify(
 
     for space in expected_sb.spaces:
         want = _web_counter(expected_sb, space.pinned_id)
+        wrapped = _wrapped_web_counter(expected_sb, space.pinned_id)
         prof, method = _pick_profile(space, want, profiles, used, mapping)
         sv = SpaceVerify(space.id, space.title, prof.name if prof else None, method,
                          expected=sum(want.values()), found=0, matched=0)
@@ -165,6 +192,15 @@ def verify(
                     continue
             if url in dia_favs:
                 sv.missing.append(UrlDiff(url, count, "present in this profile's Dia Favorites instead"))
+                continue
+            take = min(count, wrapped.get(url, 0))
+            if take:
+                sv.missing.append(UrlDiff(url, take, WRAPPED_EXPLANATION))
+                count -= take
+                if count <= 0:
+                    continue
+            if is_github_pull(url):
+                sv.missing.append(UrlDiff(url, count, GITHUB_PULL_EXPLANATION, probable=True))
             else:
                 sv.missing.append(UrlDiff(url, count, "not found in this Dia profile", expected=False))
         for url, count in sorted((+extra).items()):
@@ -242,13 +278,23 @@ def render_verify(report: VerifyReport, limit: int = 15) -> str:
         for label, n in s.expected_losses.items():
             add(f"  expected loss: {n} {label}")
         unexplained = [d for d in s.missing if not d.expected]
-        explained = [d for d in s.missing if d.expected]
+        probable = [d for d in s.missing if d.expected and d.probable]
+        explained = [d for d in s.missing if d.expected and not d.probable]
         if unexplained:
             add(f"  MISSING in Dia: {s.unexplained_missing}")
             for d in unexplained[:limit]:
                 add(f"    - {d.url}" + (f" (x{d.count})" if d.count > 1 else ""))
             if len(unexplained) > limit:
                 add(f"    ... {len(unexplained) - limit} more (use --json)")
+        probable_by_reason: Dict[str, List[UrlDiff]] = {}
+        for d in probable:
+            probable_by_reason.setdefault(d.explanation, []).append(d)
+        for reason, diffs in probable_by_reason.items():
+            add(f"  expected, probably ({reason}): {sum(d.count for d in diffs)}")
+            for d in diffs[:limit]:
+                add(f"    - {d.url}" + (f" (x{d.count})" if d.count > 1 else ""))
+            if len(diffs) > limit:
+                add(f"    ... {len(diffs) - limit} more (use --json)")
         for d in explained[:limit]:
             add(f"  ~ {d.url}: {d.explanation}")
         if s.extra:

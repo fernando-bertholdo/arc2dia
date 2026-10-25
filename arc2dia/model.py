@@ -10,6 +10,8 @@ The format is undocumented. What this module relies on (observed in real files):
   folder, ``tabGroup``, ``itemContainer``, ``splitView``, ``easel``, ``arcDocument``...).
 * A ``tabGroup`` (seen among open tabs) holds tabs and keeps its name in
   ``data.tabGroup.title``; its own ``title`` is usually null. It is handled like a folder.
+* Dia's importer drops the tabs inside a ``splitView`` or ``tabGroup`` in the pinned area
+  (seen in a real migration test); these two kinds are the "wrappers".
 
 Everything else in the file is carried through untouched.
 """
@@ -20,7 +22,7 @@ import json
 import uuid
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Dict, Iterator, List, Optional, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Set, Tuple
 
 from .errors import FormatError
 
@@ -32,6 +34,7 @@ KIND_TAB_GROUP = "tabGroup"
 KIND_CONTAINER = "itemContainer"
 KIND_SPLIT = "splitView"
 FOLDER_KINDS = (KIND_FOLDER, KIND_TAB_GROUP)
+WRAPPER_KINDS = (KIND_SPLIT, KIND_TAB_GROUP)  # Dia drops the tabs inside these in the pinned area
 KNOWN_UNSUPPORTED = ("easel", "arcDocument")
 _KNOWN_ORDER = (KIND_TAB, KIND_FOLDER, KIND_TAB_GROUP, KIND_CONTAINER, KIND_SPLIT) + KNOWN_UNSUPPORTED
 
@@ -379,6 +382,15 @@ class Sidebar:
                 stack.extend((c, child_path, in_split) for c in reversed(kids))
             elif kids:
                 stack.extend((c, path, in_split or kind == KIND_SPLIT) for c in reversed(kids))
+
+    def wrapped_ids(self, root_id: Optional[str]) -> Set[str]:
+        """Ids of the items below ``root_id`` that sit inside a split view or an Arc tab group,
+        at any depth (the wrappers themselves are not included unless nested in another)."""
+        out: Set[str] = set()
+        for entry in self.walk(root_id):
+            if entry.kind in WRAPPER_KINDS and entry.id not in out:
+                out.update(e.id for e in self.walk(entry.id))
+        return out
 
     def favorite_entries(self) -> Iterator[Tuple[FavoritesContainer, WalkEntry]]:
         for fav in self.favorites:

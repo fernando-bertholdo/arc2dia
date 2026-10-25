@@ -1,5 +1,42 @@
 # Changelog
 
+## 0.1.3 (2026-10-25)
+
+Fixes from the first end-to-end runs on a real Mac with real Dia, with real data and with the
+synthetic example.
+
+- Dia's importer drops the tabs inside split views (`data.splitView`) and Arc tab groups
+  (`data.tabGroup`) in the pinned area: in the test, docs.example.com/a and /b (Work) and
+  papers.example.org/1 and /2 (Research) never reached Dia. `prepare` now unwraps them by default,
+  at any depth: their items take the wrapper's place in the same parent, in order, and the wrapper
+  is removed. This runs after duplicate removal and `to-bookmarks` exports (which still treat a
+  pinned tab group as a folder) and before the other folder strategies. New plan option
+  `pinned_wrappers: "unwrap" | "keep"` (`--keep-pinned-wrappers`). The prepare report lists what was
+  unwrapped (also in `report.json`, per space), and validation warns about tabs still left inside
+  pinned wrappers, for example split views kept with `open_tabs_split_views: keep`.
+- `scan` and the predictions in `plan` and `prepare` count those tabs as not imported, and tab
+  groups only count towards the upper estimate of groups.
+- `verify --prepared` takes the expected Favorites from the cleaned file instead of the current Arc
+  file, which is the wrong source after `swap --allow-other-source` (it reported the user's own
+  favorites as missing). When the current Arc file is not the one the migration was prepared from,
+  differences are explained with the prepared source file if it is still there, or with the
+  cleaned file, and a note says so.
+- `verify` lists GitHub pull-request URLs (`github.com/<owner>/<repo>/pull/<n>`) that Dia does not
+  show under "expected, probably", since Dia may show them as Live items instead of tabs, and
+  explains tabs lost from pinned split views and tab groups. Other missing URLs are still MISSING.
+- In the real test, another program launched Arc in the background while the cleaned file was in
+  place; Arc ran for about 25 minutes with Sync on and rewrote the sidebar (`restore` noticed and
+  kept that version). `status` now prints a WARNING when a swap is active and the sidebar file no
+  longer matches the installed cleaned copy (or is missing, or is the original again), and when Arc
+  runs during a swap; otherwise it says the file is still the installed cleaned copy. `swap` and
+  the README say that closing Arc's window does not quit Arc, that other apps or automation can
+  launch it in the background, that turning off Arc's sync first is the safest choice, and to run
+  `status` right before and right after Dia's import.
+- Skill (all three eval levels and the shipped `SKILL.md`): run `status` right before and right
+  after Dia's import. The eval's simulated importer drops tabs inside pinned split views and tab
+  groups too, and the scripted good agent checks `status` around the import.
+- README: status line updated after the end-to-end runs.
+
 ## 0.1.2 (2026-10-24)
 
 - `swap --allow-other-source` (testing only): install a cleaned file prepared from a different

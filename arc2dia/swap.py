@@ -55,8 +55,9 @@ class PgrepChecker(ProcessChecker):
 def require_arc_closed(checker: ProcessChecker) -> None:
     if checker.is_running(ARC_PROCESS):
         raise SafetyError(
-            "Arc is running. Quit Arc completely (Arc > Quit Arc, or Cmd+Q) and run this again. "
-            "Arc must stay closed until restore, because Arc Sync can upload the modified sidebar."
+            "Arc is running. Quit Arc completely (Arc > Quit Arc, or Cmd+Q; closing its window does not quit "
+            "it) and run this again. Arc must stay closed until restore, because Arc Sync can upload the "
+            "modified sidebar."
         )
 
 
@@ -132,8 +133,15 @@ def swap(sidebar_path, prepared_dir, backup_root, apply: bool, checker: ProcessC
         f"  3. record the swap in {backup_root / STATE_FILE}",
     ]
     if manifest.get("sync_keys"):
-        lines.append("Arc Sync looks enabled in this file. Keep Arc closed until restore is done.")
+        lines.append("Arc Sync looks enabled in this file. Keep Arc quit until restore is done.")
+        if not apply:
+            lines.append("  Safest, if you can: turn off Arc's sync before the swap. Arc may rewrite this file when "
+                         "you do, so run plan and prepare again afterwards.")
+        else:
+            lines.append("  Turning off Arc's sync before the swap is the safest choice; do not open Arc now to do "
+                         "it, only before a later run.")
     if not apply:
+        lines.extend(ARC_QUIT_NOTES)
         lines.append("Dry run: nothing was changed. Re-run with --apply to do it.")
         return lines
 
@@ -183,13 +191,23 @@ def swap(sidebar_path, prepared_dir, backup_root, apply: bool, checker: ProcessC
     return lines
 
 
+ARC_QUIT_NOTES = [
+    "Arc must stay quit until restore: closing Arc's window does not quit Arc (use Arc > Quit Arc,",
+    "or Cmd+Q), and other apps or automation can launch Arc in the background without a window.",
+]
+
+
 def dia_import_steps(prepared: Optional[Path] = None) -> List[str]:
     ts = timestamp()
     reset_dir = f'"$HOME/dia-reset-backup-{ts}"'
     support = '"$HOME/Library/Application Support/Dia"'
     verify = f"{PROG} verify" + (f" --prepared {prepared}" if prepared else "")
     return [
-        "Import into Dia now. Keep Arc closed until step 3 is done.",
+        "Import into Dia now. Keep Arc quit until step 3 is done.",
+        *ARC_QUIT_NOTES,
+        f"Run `{PROG} status` right before and right after the import: it must show \"Arc: not running\"",
+        "and no WARNING line. If Arc is running, quit it with Arc > Quit Arc; if the file changed,",
+        "restore first and start again from plan.",
         "",
         "Optional: start from a fresh Dia. Each import creates new profiles and never merges into",
         "existing ones, so a reset avoids a second set of profiles. Quit Dia first, then run:",
@@ -286,9 +304,11 @@ def status(sidebar_path, backup_root, checker: Optional[ProcessChecker] = None, 
     lines = [f"Sidebar file: {sidebar}"]
     current = sha256_file(sidebar) if sidebar.exists() else None
     lines.append(f"  sha256 {current}" if current else "  (missing)")
+    arc_running: Optional[bool] = None
     if checker is not None:
         try:
-            lines.append("Arc: running" if checker.is_running(ARC_PROCESS) else "Arc: not running")
+            arc_running = checker.is_running(ARC_PROCESS)
+            lines.append("Arc: running" if arc_running else "Arc: not running")
         except Arc2DiaError as exc:
             lines.append(f"Arc: unknown ({exc})")
     if prepared_dir is not None:
@@ -306,6 +326,7 @@ def status(sidebar_path, backup_root, checker: Optional[ProcessChecker] = None, 
     lines.append(f"Backups: {backup_root}")
     if state.get("active"):
         lines.append(f"  ACTIVE SWAP: {state['active']}. Run `{PROG} restore --apply` before opening Arc.")
+        lines.extend(_active_swap_checks(backup_root / state["active"], current, arc_running))
     else:
         lines.append("  no active swap")
     if backup_root.exists():
@@ -320,4 +341,29 @@ def status(sidebar_path, backup_root, checker: Optional[ProcessChecker] = None, 
             elif current and current == rec.get("cleaned_sha256"):
                 mark = " (current file is this cleaned copy)"
             lines.append(f"  {d.name}: {rec.get('status')}{mark}")
+    return lines
+
+
+def _active_swap_checks(bdir: Path, current: Optional[str], arc_running: Optional[bool]) -> List[str]:
+    """While a swap is active, the sidebar file must still be the installed cleaned copy and Arc
+    must not run. Arc launched in the background (by another app or automation) rewrites the file."""
+    try:
+        record = read_json(bdir / SWAP_RECORD)
+    except (OSError, ValueError):
+        return [f"WARNING: cannot read {bdir / SWAP_RECORD}; check the backup folder before going on."]
+    lines = []
+    if current is not None and current == record.get("cleaned_sha256"):
+        lines.append("  the sidebar file is still the installed cleaned copy")
+    elif current is None:
+        lines.append("WARNING: the sidebar file is missing while a swap is active. "
+                     f"Quit Arc, then run `{PROG} restore --apply`.")
+    elif current == record.get("original_sha256"):
+        lines.append("WARNING: the sidebar file is the original again, not the cleaned copy, but the swap is "
+                     f"still recorded. Do not run Dia's import now; run `{PROG} restore --apply` to close it.")
+    else:
+        lines.append("WARNING: the sidebar file no longer matches the installed cleaned copy. Arc or another "
+                     f"program wrote the file; quit Arc, then restore (`{PROG} restore --apply`).")
+    if arc_running:
+        lines.append("WARNING: Arc is running while a swap is active. Quit it with Arc > Quit Arc or Cmd+Q "
+                     f"(closing its window does not quit it), then run `{PROG} status` again.")
     return lines

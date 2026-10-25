@@ -166,3 +166,63 @@ def test_plan_options_with_plan_file_are_reported(tmp_path, sidebar_file, capsys
     code, _, err = run(["prepare", "--sidebar", str(sidebar_file), "--plan", str(plan_path),
                         "-o", str(tmp_path / "out"), "--dedupe-urls"], capsys)
     assert code == 0 and "--dedupe-urls is ignored" in err
+
+
+def test_verify_after_allow_other_source_uses_the_prepared_files(tmp_path, sidebar_file, capsys):
+    """The synthetic example goes through swap --allow-other-source while the user's own Arc file
+    (here another synthetic sidebar with 6 favorites) is backed up and restored. verify --prepared
+    must compare Favorites with the cleaned file, not with the restored Arc file."""
+    import fixturegen
+
+    example = tmp_path / "example.json"
+    example.write_bytes(sidebar_file.read_bytes())
+    own = fixturegen.Builder(seed="own-arc")
+    _, pinned, _ = own.space("Mine")
+    own.tab(pinned, "https://mine.example.com/")
+    fav = own.favorites()
+    for n in range(6):
+        own.tab(fav, f"https://own-favorite-{n}.example.com/")
+    sidebar_file.write_text(json.dumps(own.build()))
+    own_sha = sha256_file(sidebar_file)
+    out_dir, backups = tmp_path / "out", tmp_path / "backups"
+
+    assert run(["prepare", "--sidebar", str(example), "-o", str(out_dir)], capsys)[0] == 0
+    swap_args = ["swap", "--sidebar", str(sidebar_file), "--prepared", str(out_dir), "--backup-dir", str(backups),
+                 "--apply"]
+    code, out, _ = run(swap_args + ["--allow-other-source"], capsys, checker=FakeChecker(False))
+    assert code == 0 and "TEST MODE" in out
+    dump = tmp_path / "dia-dump.txt"
+    dump.write_text(dump_text(simulate_dia_import(Sidebar.load(sidebar_file))))
+    assert run(["restore", "--backup-dir", str(backups), "--apply"], capsys, checker=FakeChecker(False))[0] == 0
+    assert sha256_file(sidebar_file) == own_sha
+
+    code, out, _ = run(["verify", "--sidebar", str(sidebar_file), "--prepared", str(out_dir),
+                        "--dia-dump", str(dump)], capsys)
+    assert code == 0, out
+    assert "is not the file this migration was prepared from" in out and str(example) in out
+    assert "Favorites: 3 web favorites in Arc" in out and "not found in Dia" not in out
+    assert "every difference is explained" in out
+
+    # Without the example file, the cleaned file explains the differences.
+    example.rename(tmp_path / "moved.json")
+    code, out, _ = run(["verify", "--sidebar", str(sidebar_file), "--prepared", str(out_dir),
+                        "--dia-dump", str(dump)], capsys)
+    assert code == 0 and "explained with the cleaned file" in out
+
+
+def test_keep_pinned_wrappers_option(tmp_path, sidebar_file, capsys):
+    code, out, _ = run(["plan", "--sidebar", str(sidebar_file), "--print", "--keep-pinned-wrappers"], capsys)
+    data = json.loads(out)
+    assert code == 0 and {s["pinned_wrappers"] for s in data["spaces"]} == {"keep"}
+    assert data["spaces"][0]["_about"]["pinned_wrapped_tabs"] == 2
+    code, out, _ = run(["plan", "--sidebar", str(sidebar_file), "-o", str(tmp_path / "plan.json")], capsys)
+    assert code == 0 and "pinned split views and tab groups: unwrap (1 split view holding 2 tabs" in out
+    assert json.loads((tmp_path / "plan.json").read_text())["spaces"][0]["pinned_wrappers"] == "unwrap"
+    code, out, _ = run(["prepare", "--sidebar", str(sidebar_file), "-o", str(tmp_path / "out"),
+                        "--keep-pinned-wrappers"], capsys)
+    assert code == 0 and "unwrapped" not in out
+    assert "warning: 4 tabs still sit inside split views or tab groups in the pinned area" in out
+    code, out, _ = run(["prepare", "--sidebar", str(sidebar_file), "-o", str(tmp_path / "out2")], capsys)
+    assert code == 0 and "unwrapped 1 split view in the pinned area" in out
+    assert 'unwrapped 1 tab group in the pinned area' in out and '"Reading list" at the top level, 2 tabs' in out
+    assert "still sit inside" not in out

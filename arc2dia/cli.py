@@ -115,6 +115,7 @@ def build_plan(sb: Sidebar, args, source_path: str, sha: str) -> Plan:
             open_tabs_folder_name=args.open_tabs_folder,
             open_tabs_split_views=args.split_views,
             open_tabs_tab_groups=args.tab_groups,
+            pinned_wrappers="keep" if args.keep_pinned_wrappers else "unwrap",
             drop_empty_folders=not args.keep_empty_folders,
             non_web=args.non_web,
             merge_bookmark_folders=not args.no_merge_bookmark_folders,
@@ -144,6 +145,9 @@ def annotated_plan_json(sb: Sidebar, plan: Plan) -> dict:
         "open_tabs_split_views": "flatten: split views become their separate tabs; keep: leave split views as they are",
         "open_tabs_tab_groups": "flatten: tabs from Arc tab groups go straight into the open-tabs folder, in order; "
                                 "subfolders: one subfolder per tab group (Dia turns each into its own flat group)",
+        "pinned_wrappers": "unwrap: split views and tab groups in the pinned area are replaced by their tabs, in "
+                           "order, because Dia's importer drops the tabs inside them (seen in a real migration "
+                           "test); keep: leave them as they are",
         "merge_bookmark_folders": "in bookmarks.html, merge sibling folders with the same name and keep one copy "
                                   "of a URL per folder",
         "non_web": "keep: leave file:, javascript: and other non-web links (Dia drops them); "
@@ -163,6 +167,9 @@ def annotated_plan_json(sb: Sidebar, plan: Plan) -> dict:
             "max_depth": s.max_depth,
             "open_tabs": s.open_tabs,
             "open_tab_groups": s.open_tab_groups,
+            "pinned_split_views": s.pinned_split_views,
+            "pinned_tab_groups": s.pinned_tab_groups,
+            "pinned_wrapped_tabs": s.pinned_wrapped_tabs,
             "tabs_without_url": s.tabs_without_url,
             "non_web_urls": len(s.non_web),
             "duplicate_trees": [
@@ -208,10 +215,18 @@ def render_plan_summary(data: dict) -> str:
                 mark = "*" if strat == sp["folder_strategy"] else " "
                 add(f"   {mark} {strat:<13} {_n(r['pinned_groups'], 'group'):>10} ({r['nested_groups']} nested in Arc), "
                     f"{r['tabs_in_groups']} tabs in groups, {r['loose_pinned_tabs']} loose, "
-                    f"{r['bookmarks']} to bookmarks, {r['deduplicated']} duplicates removed")
+                    f"{r['bookmarks']} to bookmarks, {r['deduplicated']} duplicates removed"
+                    + (f", {r['wrapped_tabs_lost']} dropped in split views/tab groups"
+                       if r.get("wrapped_tabs_lost") else ""))
         add(f"  open tabs: {sp['open_tabs']}" + (f' ("{sp["open_tabs_folder_name"]}")' if sp["open_tabs"] != "leave" else "")
             + f"; split views: {sp['open_tabs_split_views']}; tab groups: {sp['open_tabs_tab_groups']}"
             + (f" ({about['open_tab_groups']} in this space)" if about.get("open_tab_groups") else ""))
+        if about.get("pinned_wrapped_tabs"):
+            held = [_n(about.get(k, 0), w) for k, w in (("pinned_split_views", "split view"),
+                                                         ("pinned_tab_groups", "tab group")) if about.get(k)]
+            add(f"  pinned split views and tab groups: {sp.get('pinned_wrappers', 'unwrap')} "
+                f"({', '.join(held)} holding {_n(about['pinned_wrapped_tabs'], 'tab')}; "
+                "Dia's importer drops the tabs inside them)")
         add(f"  dedupe_trees: {str(sp['dedupe_trees']).lower()}, dedupe_urls: {str(sp['dedupe_urls']).lower()}, "
             f"drop_empty_folders: {str(sp['drop_empty_folders']).lower()}, non_web: {sp['non_web']}")
         for d in about.get("duplicate_trees", []):
@@ -298,7 +313,7 @@ def cmd_verify(args, deps: Deps) -> int:
         _out(READ_SCRIPT.strip())
         return 0
     mapping = dict(_pairs(args.map, "--map"))
-    original, _, _ = _load_sidebar(args.sidebar)
+    original, current_sha, current_path = _load_sidebar(args.sidebar)
     mode = "original"
     expected = original
     if args.prepared:
@@ -306,10 +321,24 @@ def cmd_verify(args, deps: Deps) -> int:
         cleaned_path = expand(args.prepared) / manifest.get("cleaned_file", CLEANED_NAME)
         expected = Sidebar.load(cleaned_path)
         mode = "prepared"
-        if sha256_bytes(expand(args.sidebar).read_bytes()) == manifest.get("cleaned_sha256"):
-            _out(f"Warning: {expand(args.sidebar)} is still the cleaned copy. Run `{PROG} restore --apply` "
+        if current_sha == manifest.get("cleaned_sha256"):
+            _out(f"Warning: {current_path} is still the cleaned copy. Run `{PROG} restore --apply` "
                  "before opening Arc.")
             original = expected
+        elif current_sha != manifest.get("source_sha256"):
+            # Arc changed the file since prepare, or the cleaned file came from another sidebar
+            # (swap --allow-other-source). Explain differences with the prepared source if it is
+            # still there, otherwise with the cleaned file itself.
+            original = expected
+            source = expand(manifest["source_path"]) if manifest.get("source_path") else None
+            used = "the cleaned file"
+            try:
+                if source is not None and sha256_bytes(source.read_bytes()) == manifest.get("source_sha256"):
+                    original, used = Sidebar.load(source), str(source)
+            except (OSError, Arc2DiaError):
+                pass
+            _out(f"Note: {current_path} is not the file this migration was prepared from; "
+                 f"differences are explained with {used}.")
     if args.dia_dump:
         source: DiaSource = DumpDiaSource(args.dia_dump)
     else:
@@ -336,6 +365,7 @@ _PLAN_OPTION_DEFAULTS = [
     ("--open-tabs-folder", "open_tabs_folder", DEFAULT_OPEN_TABS_FOLDER),
     ("--split-views", "split_views", "flatten"),
     ("--tab-groups", "tab_groups", "flatten"),
+    ("--keep-pinned-wrappers", "keep_pinned_wrappers", False),
     ("--no-merge-bookmark-folders", "no_merge_bookmark_folders", False),
     ("--keep-empty-folders", "keep_empty_folders", False),
     ("--non-web", "non_web", "keep"),
@@ -364,6 +394,9 @@ def _add_plan_options(p: argparse.ArgumentParser) -> None:
                    help="split views among open tabs [flatten]")
     g.add_argument("--tab-groups", choices=TAB_GROUP_MODES, default="flatten",
                    help="Arc tab groups among open tabs: flatten into the open-tabs folder, or one subfolder each [flatten]")
+    g.add_argument("--keep-pinned-wrappers", action="store_true",
+                   help="leave split views and tab groups in the pinned area as they are; Dia's importer drops "
+                        "the tabs inside them [they are unwrapped into their tabs]")
     g.add_argument("--keep-empty-folders", action="store_true", help="keep folders with no tabs [they are dropped]")
     g.add_argument("--no-merge-bookmark-folders", action="store_true",
                    help="in bookmarks.html, keep same-named sibling folders apart [they are merged]")

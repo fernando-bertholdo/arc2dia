@@ -264,6 +264,36 @@ def test_importer_follows_dias_observed_behaviour():
     assert [t["url"] for t in created[1]["tabs"] if t["pinned"]] == ["https://bank.example.com/"]
 
 
+def test_importer_drops_tabs_inside_pinned_split_views_and_tab_groups():
+    """Seen in a real migration test: docs.example.com/a and /b (a pinned split view in Work) and
+    papers.example.org/1 and /2 (a pinned tab group in Research) never reached Dia."""
+    raw = fixture.eval_sidebar()
+    created = {p["name"]: p for p in importer.simulate_import(raw, [])}
+    urls = {name: [t["url"] for t in p["tabs"] if not t["pinned"]] for name, p in created.items()}
+    for name, lost in (("Work", ["https://docs.example.com/a", "https://docs.example.com/b"]),
+                       ("Research", ["https://papers.example.org/1", "https://papers.example.org/2"])):
+        assert not set(lost) & set(urls[name]), name
+    assert "https://wiki.example.com/" in urls["Work"] and "https://research.example.org/home" in urls["Research"]
+    assert "Reading list" not in [g["name"] for g in created["Research"]["groups"]]
+    arc = importer.ArcData(raw)
+    research = [s for s in arc.spaces if s["title"] == "Research"][0]
+    assert len([i for i in arc.wrapped(research["pinned"]) if importer.kind(arc.items[i]) == "tab"]) == 2
+
+
+def test_importer_keeps_unwrapped_tabs_from_a_cleaned_file(make_run):
+    """After the default prepare the same tabs are plain pinned tabs, so Dia imports them."""
+    sb = make_run("S1")
+    a2d(sb, "plan")
+    code, out = a2d(sb, "prepare --plan arc2dia-plan.json")
+    assert code == 0 and "unwrapped 1 split view" in out and "unwrapped 1 tab group" in out
+    cleaned = json.loads((sb.home / "arc2dia-out" / "StorableSidebar.cleaned.json").read_text())
+    created = {p["name"]: p for p in importer.simulate_import(cleaned, [])}
+    work = [t["url"] for t in created["Work"]["tabs"]]
+    research = [t["url"] for t in created["Research"]["tabs"]]
+    assert "https://docs.example.com/a" in work and "https://docs.example.com/b" in work
+    assert "https://papers.example.org/1" in research and "https://papers.example.org/2" in research
+
+
 def test_fixture_is_synthetic_and_covers_the_cases():
     raw = fixture.eval_sidebar()
     text = json.dumps(raw)

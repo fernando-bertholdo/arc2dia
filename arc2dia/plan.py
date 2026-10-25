@@ -19,6 +19,7 @@ FOLDER_STRATEGIES = ("keep", "path-names", "merge-to-top", "to-bookmarks")
 OPEN_TABS_MODES = ("pinned-folder", "bookmarks", "leave")
 SPLIT_VIEW_MODES = ("flatten", "keep")
 TAB_GROUP_MODES = ("flatten", "subfolders")
+PINNED_WRAPPER_MODES = ("unwrap", "keep")
 NON_WEB_MODES = ("keep", "to-bookmarks")
 
 DEFAULT_OPEN_TABS_FOLDER = "Open tabs from Arc"
@@ -61,6 +62,7 @@ class SpacePlan:
     open_tabs_folder_name: str = DEFAULT_OPEN_TABS_FOLDER
     open_tabs_split_views: str = "flatten"
     open_tabs_tab_groups: str = "flatten"
+    pinned_wrappers: str = "unwrap"
     drop_empty_folders: bool = True
     non_web: str = "keep"
     merge_bookmark_folders: bool = True
@@ -78,6 +80,7 @@ class SpacePlan:
             "open_tabs_folder_name": self.open_tabs_folder_name,
             "open_tabs_split_views": self.open_tabs_split_views,
             "open_tabs_tab_groups": self.open_tabs_tab_groups,
+            "pinned_wrappers": self.pinned_wrappers,
             "drop_empty_folders": self.drop_empty_folders,
             "non_web": self.non_web,
             "merge_bookmark_folders": self.merge_bookmark_folders,
@@ -93,6 +96,7 @@ def unchanged_space_plan(space_id: str, title: str = "") -> SpacePlan:
         dedupe_trees=False,
         dedupe_urls=False,
         open_tabs="leave",
+        pinned_wrappers="keep",
         drop_empty_folders=False,
         non_web="keep",
     )
@@ -125,8 +129,8 @@ class Plan:
 
 _SPACE_KEYS = {
     "space_id", "title", "import", "folder_strategy", "folder_overrides", "dedupe_trees", "dedupe_urls",
-    "open_tabs", "open_tabs_folder_name", "open_tabs_split_views", "open_tabs_tab_groups", "drop_empty_folders",
-    "non_web", "merge_bookmark_folders",
+    "open_tabs", "open_tabs_folder_name", "open_tabs_split_views", "open_tabs_tab_groups", "pinned_wrappers",
+    "drop_empty_folders", "non_web", "merge_bookmark_folders",
 }
 _TOP_KEYS = {"arc2dia_plan_version", "source", "path_separator", "spaces"}
 
@@ -195,6 +199,8 @@ def space_plan_from_json(obj: Any, where: str) -> SpacePlan:
         sp.open_tabs_split_views = _enum(obj["open_tabs_split_views"], SPLIT_VIEW_MODES, f"{where}.open_tabs_split_views")
     if "open_tabs_tab_groups" in obj:
         sp.open_tabs_tab_groups = _enum(obj["open_tabs_tab_groups"], TAB_GROUP_MODES, f"{where}.open_tabs_tab_groups")
+    if "pinned_wrappers" in obj:
+        sp.pinned_wrappers = _enum(obj["pinned_wrappers"], PINNED_WRAPPER_MODES, f"{where}.pinned_wrappers")
     if "non_web" in obj:
         sp.non_web = _enum(obj["non_web"], NON_WEB_MODES, f"{where}.non_web")
     return sp

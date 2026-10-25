@@ -192,6 +192,17 @@ def validate(source: Sidebar, output_bytes: bytes, html_text: str, ledger: List[
         elif tab_url(source.items[item_id]) != tab_url(out.items[item_id]):
             v.errors.append(f"tab {item_id} changed URL")
 
+    # 7. Tabs Dia's importer is known to drop: those inside pinned split views and tab groups.
+    wrapped = 0
+    for space in out.spaces:
+        wrapped += sum(1 for i in out.wrapped_ids(space.pinned_id) if out.kind(i) == KIND_TAB)
+    if wrapped:
+        v.warnings.append(
+            ("1 tab still sits" if wrapped == 1 else f"{wrapped} tabs still sit")
+            + " inside split views or tab groups in the pinned area; Dia's importer drops these "
+            "(seen in a real migration test)"
+        )
+
     counts = Counter(e.fate for e in ledger)
     v.stats = {
         "original_tabs": len(src_tabs),
@@ -202,5 +213,6 @@ def validate(source: Sidebar, output_bytes: bytes, html_text: str, ledger: List[
         "bookmarks_in_html": sum(html_urls.values()),
         "output_items": len(out.items),
         "original_items": len(source.items),
+        "pinned_wrapped_tabs": wrapped,
     }
     return v

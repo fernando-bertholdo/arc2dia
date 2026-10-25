@@ -138,10 +138,14 @@ def render_prepare(out_dir: Path, result: PrepareResult, validation: Validation,
             groups = (str(b.pinned_groups) if b.pinned_groups_min == b.pinned_groups
                       else f"{b.pinned_groups_min} to {b.pinned_groups}")
             add(f"  Dia, before: {groups} pinned groups ({b.nested_groups} nested in Arc), "
-                f"{_n(b.open_tabs_lost, 'open tab')} not imported")
+                f"{_n(b.open_tabs_lost, 'open tab')} not imported"
+                + (f", {_n(b.wrapped_tabs_lost, 'tab')} in pinned split views and tab groups dropped"
+                   if b.wrapped_tabs_lost else ""))
             add(f"  Dia, after:  {_n(a.pinned_groups, 'pinned group')} ({a.nested_groups} nested in Arc), "
                 f"{_n(a.loose_pinned_tabs, 'loose pinned tab')}, {_n(a.tabs_in_groups, 'tab')} in groups, "
                 f"{_n(a.open_tabs_lost, 'open tab')} not imported"
+                + (f", {_n(a.wrapped_tabs_lost, 'tab')} in pinned split views and tab groups dropped"
+                   if a.wrapped_tabs_lost else "")
                 + (f", {_n(a.non_web_dropped, 'non-web URL')} dropped by Dia" if a.non_web_dropped else ""))
     counts = result.fate_counts()
     total = sum(counts.values())

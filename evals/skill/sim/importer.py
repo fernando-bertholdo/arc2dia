@@ -4,7 +4,9 @@ arc2dia package so the eval does not grade the tool with its own parser.
 Observed behaviour it copies: every Arc space becomes a NEW Dia profile (a clashing name gets
 " 2", " 3"...); pinned tabs are imported, including those inside folders, which are flattened
 into one group per folder; Favorites come along as pinned (isPinned) tabs; only http(s) URLs
-survive; open ("Today", unpinned) tabs are NOT imported. Tabs without a URL are skipped.
+survive; open ("Today", unpinned) tabs are NOT imported. Tabs without a URL are skipped. Tabs
+inside a split view or an Arc tab group in the pinned area are NOT imported either (seen in a
+real migration test with the synthetic example file).
 """
 
 from __future__ import annotations
@@ -12,6 +14,7 @@ from __future__ import annotations
 from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 ORDER = ("tab", "list", "tabGroup", "itemContainer", "splitView", "easel", "arcDocument")
+WRAPPERS = ("splitView", "tabGroup")  # Dia drops the pinned tabs inside these
 
 
 class ParseError(ValueError):
@@ -136,6 +139,24 @@ class ArcData:
             inner = iid if k in ("list", "tabGroup") else folder
             stack.extend((c, inner) for c in reversed(self.children(iid)))
 
+    def wrapped(self, root: Optional[str]) -> set:
+        """Ids below ``root`` that sit inside a split view or a tab group, at any depth."""
+        out: set = set()
+        if not root or root not in self.items:
+            return out
+        seen = {root}
+        stack = [(c, False) for c in reversed(self.children(root))]
+        while stack:
+            iid, inside = stack.pop()
+            if iid in seen:
+                continue
+            seen.add(iid)
+            if inside:
+                out.add(iid)
+            inner = inside or kind(self.items[iid]) in WRAPPERS
+            stack.extend((c, inner) for c in reversed(self.children(iid)))
+        return out
+
     def web_urls(self, root: Optional[str]) -> List[str]:
         return [tab_url(o) for _, o, _ in self.walk(root) if kind(o) == "tab" and is_web(tab_url(o))]
 
@@ -164,8 +185,9 @@ def simulate_import(raw: Any, existing_names: List[str]) -> List[dict]:
         tabs = list(favs_by_profile.get(space["profile"], []))
         groups: Dict[str, dict] = {}
         order: List[str] = []
-        for _, obj, folder in arc.walk(space["pinned"]):
-            if kind(obj) != "tab" or not is_web(tab_url(obj)):
+        dropped = arc.wrapped(space["pinned"])
+        for iid, obj, folder in arc.walk(space["pinned"]):
+            if kind(obj) != "tab" or not is_web(tab_url(obj)) or iid in dropped:
                 continue
             tabs.append({"url": tab_url(obj), "title": tab_title(obj), "pinned": False})
             if folder is not None:

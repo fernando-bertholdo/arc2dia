@@ -328,11 +328,18 @@ class DiaPrediction:
     open_tabs_lost: int
     non_web_dropped: int  # pinned non-http(s) URLs (open ones are already counted as lost)
     unsupported_items: int
+    wrapped_tabs_lost: int = 0  # pinned web tabs inside split views or tab groups (Dia drops them)
 
 
 def predict_import(sb: Sidebar, space: Space) -> DiaPrediction:
+    """Observed: one flat group per folder or tab group; open tabs, non-web URLs and the tabs
+    inside pinned split views and tab groups are not imported (the last one seen in a real
+    migration test). Whether a tab group whose tabs are dropped still shows up as an empty
+    group is unknown, so tab groups only count towards the upper estimate."""
     infos = collect_folders(sb, space.pinned_id)
-    pinned_tabs = [e for e in sb.walk(space.pinned_id) if e.kind == KIND_TAB]
+    wrapped = sb.wrapped_ids(space.pinned_id)
+    all_pinned_tabs = [e for e in sb.walk(space.pinned_id) if e.kind == KIND_TAB]
+    pinned_tabs = [e for e in all_pinned_tabs if e.id not in wrapped]
     open_tabs = [e for e in sb.walk(space.unpinned_id) if e.kind == KIND_TAB]
     unsupported = sum(
         1
@@ -343,13 +350,18 @@ def predict_import(sb: Sidebar, space: Space) -> DiaPrediction:
     return DiaPrediction(
         profile_name=space.title,
         pinned_groups=len(infos),
-        pinned_groups_min=sum(1 for i in infos.values() if i.direct_tabs > 0),
+        pinned_groups_min=sum(
+            1 for i in infos.values()
+            if sb.kind(i.id) == KIND_FOLDER and i.id not in wrapped
+            and any(sb.kind(c) == KIND_TAB for c in sb.children(i.id))
+        ),
         nested_groups=sum(1 for i in infos.values() if i.parent_folder is not None),
         loose_pinned_tabs=sum(1 for e in pinned_tabs if not e.path),
         tabs_in_groups=sum(1 for e in pinned_tabs if e.path),
         open_tabs_lost=len(open_tabs),
-        non_web_dropped=sum(1 for e in pinned_tabs if tab_url(e.obj) and not U.is_web(tab_url(e.obj))),
+        non_web_dropped=sum(1 for e in all_pinned_tabs if tab_url(e.obj) and not U.is_web(tab_url(e.obj))),
         unsupported_items=unsupported,
+        wrapped_tabs_lost=sum(1 for e in all_pinned_tabs if e.id in wrapped and U.is_web(tab_url(e.obj))),
     )
 
 
@@ -384,6 +396,7 @@ class SpaceScan:
     open_tab_groups: int
     open_tabs_in_groups: int
     pinned_tab_groups: int
+    pinned_wrapped_tabs: int  # tabs inside pinned split views or tab groups: Dia drops them
     tabs_without_url: int
     unsupported: Dict[str, int]
     non_web: List[NonWebUrl]
@@ -461,6 +474,7 @@ def scan_space(sb: Sidebar, space: Space) -> SpaceScan:
         open_tab_groups=sum(1 for e in opened if e.kind == KIND_TAB_GROUP),
         open_tabs_in_groups=sum(1 for e in opened if e.kind == KIND_TAB and e.path),
         pinned_tab_groups=sum(1 for e in pinned if e.kind == KIND_TAB_GROUP),
+        pinned_wrapped_tabs=len([i for i in sb.wrapped_ids(space.pinned_id) if sb.kind(i) == KIND_TAB]),
         tabs_without_url=sum(1 for e in pinned + opened if e.kind == KIND_TAB and not tab_url(e.obj)),
         unsupported=dict(unsupported),
         non_web=non_web,
@@ -528,6 +542,9 @@ def render_scan(report: ScanReport) -> str:
             + (f"; {_n(s.open_folders, 'folder')}" if s.open_folders else ""))
         if s.pinned_tab_groups:
             add(f"  Tab groups {s.pinned_tab_groups} in the pinned area (counted as folders above)")
+        if s.pinned_wrapped_tabs:
+            add(f"  Wrapped    {_n(s.pinned_wrapped_tabs, 'pinned tab')} inside split views or tab groups: Dia's "
+                "importer drops these (seen in a real migration test); prepare unwraps them by default")
         if s.tabs_without_url:
             add(f"  No URL     {_n(s.tabs_without_url, 'tab')} without a saved URL; kept as they are")
         if s.non_web:
@@ -556,6 +573,8 @@ def render_scan(report: ScanReport) -> str:
         losses = []
         if p.open_tabs_lost:
             losses.append(_n(p.open_tabs_lost, "open tab"))
+        if p.wrapped_tabs_lost:
+            losses.append(_n(p.wrapped_tabs_lost, "tab") + " in pinned split views and tab groups")
         if p.non_web_dropped:
             losses.append(_n(p.non_web_dropped, "pinned non-web URL"))
         add("    not imported: " + (", ".join(losses) if losses else "nothing expected"))

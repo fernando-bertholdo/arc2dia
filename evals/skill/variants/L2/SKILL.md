@@ -101,6 +101,9 @@ Do the steps in order. Each checkpoint must hold before you go on.
 6. **Import.** Ask the user to open Dia, choose Dia > Import from Another Browser… > Arc, wait
    until the new profiles appear, and tell you when it finished or what error Dia showed. Remind
    them to keep Arc closed and not to click through all imported tabs (they load when clicked).
+   Right before you ask, and right after the user answers, run `A2D status`: it must show
+   `Arc: not running` and `still the installed cleaned copy`; if Arc is running, ask the user to
+   quit it (Arc > Quit Arc), never kill it.
    Checkpoint: the user reported the result.
 
 7. **Restore, always.** If the import failed, offer one retry first: the cleaned file is still in

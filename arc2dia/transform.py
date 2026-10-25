@@ -4,16 +4,19 @@ Order of operations for each space:
   1. excluded spaces are removed whole (import: false)
   2. duplicate folder trees are removed (dedupe_trees)
   3. folders set to to-bookmarks are exported and removed
-  4. the folder strategy is applied to each remaining top-level folder
-  5. open (Today) tabs, including those inside Arc tab groups, are moved to a pinned
+  4. split views and tab groups left in the pinned area are unwrapped: their items take the
+     wrapper's place, in order (pinned_wrappers: unwrap). Dia's importer drops the tabs inside
+     them (seen in a real migration test).
+  5. the folder strategy is applied to each remaining top-level folder
+  6. open (Today) tabs, including those inside Arc tab groups, are moved to a pinned
      folder or exported (open_tabs)
-  6. non-web links are exported (non_web: to-bookmarks)
-  7. repeated URLs are removed (dedupe_urls)
-  8. folders left without content are removed (drop_empty_folders)
+  7. non-web links are exported (non_web: to-bookmarks)
+  8. repeated URLs are removed (dedupe_urls)
+  9. folders left without content are removed (drop_empty_folders)
 
 Every tab of the original file gets one ledger entry that says where it ended up.
-Tab groups count as folders. Tabs without a saved URL are never removed or exported:
-they cannot be bookmarks or duplicates, so they stay in the sidebar wherever they go.
+Tab groups count as folders for steps 2 and 3. Tabs without a saved URL are never removed or
+exported: they cannot be bookmarks or duplicates, so they stay in the sidebar wherever they go.
 """
 
 from __future__ import annotations
@@ -39,6 +42,7 @@ from .model import (
     KIND_SPLIT,
     KIND_TAB,
     KIND_TAB_GROUP,
+    WRAPPER_KINDS,
     Sidebar,
     Space,
     apple_to_unix,
@@ -87,6 +91,7 @@ class SpaceResult:
     before: Optional[DiaPrediction] = None
     after: Optional[DiaPrediction] = None
     bookmarks: int = 0
+    unwrapped: List[dict] = field(default_factory=list)  # pinned split views and tab groups unwrapped
 
 
 @dataclass
@@ -137,6 +142,7 @@ class Transformer:
         self._bm_context: Dict[Tuple[str, Tuple[str, ...]], BNode] = {}
         self._bm_urls: Dict[int, set] = {}
         self._merge_bm = True
+        self._unwrapped_tabs: set = set()
         self._build_ledger()
 
     # ------------------------------------------------------------------ ledger
@@ -168,6 +174,9 @@ class Transformer:
 
     def _finalize_ledger(self) -> None:
         where = self.sb.locate_all()
+        wrapped = set()
+        for space in self.sb.spaces:
+            wrapped |= self.sb.wrapped_ids(space.pinned_id)
         for entry in self.ledger.values():
             if entry.fate != FATE_SIDEBAR:
                 continue
@@ -182,6 +191,11 @@ class Transformer:
                 notes.append("non-http(s) URL: Dia drops it on import (expected)")
             if loc.area == "open":
                 notes.append("still an open tab: Dia's importer does not import open tabs")
+            if loc.area == "pinned" and entry.item_id in wrapped:
+                notes.append("inside a pinned split view or tab group: Dia's importer drops it "
+                             "(seen in a real migration test)")
+            elif entry.item_id in self._unwrapped_tabs:
+                notes.append("moved out of a pinned split view or tab group, whose tabs Dia's importer drops")
             if loc.area == "orphan":
                 notes.append("not under any space; Dia is not expected to import it")
             if not entry.url:
@@ -316,6 +330,8 @@ class Transformer:
         if sp.dedupe_trees:
             self._dedupe_trees(space, res.actions)
         self._export_bookmark_folders(space, sp, overrides, res.actions)
+        if sp.pinned_wrappers == "unwrap":
+            res.unwrapped = self._unwrap_pinned(space, res.actions)
         self._apply_folder_strategies(space, sp, overrides, res.actions)
         self._handle_open_tabs(space, sp, res.actions)
         if sp.non_web == "to-bookmarks":
@@ -411,6 +427,75 @@ class Transformer:
                 + (f'; merged into the "{info.title}" folder already in bookmarks.html' if merged else "")
             )
             actions.extend(kept)
+
+    def _unwrap_pinned(self, space: Space, actions: List[str]) -> List[dict]:
+        """Dia's importer drops the tabs inside split views and Arc tab groups in the pinned area
+        (seen in a real migration test). Replace every such wrapper, at any depth, with its own
+        items, in order, in the same parent; the wrapper item is removed. Returns what was unwrapped."""
+        pinned = space.pinned_id
+        if pinned is None or pinned not in self.sb.items:
+            return []
+        done: List[dict] = []
+        moved: set = set()
+        seen = {pinned}
+
+        def flatten(pid: str, path: Tuple[str, ...]) -> None:
+            out: list = []
+            for c in list(self.sb.items[pid].get("childrenIds") or []):
+                if not isinstance(c, str) or c not in self.sb.items or c in seen:
+                    out.append(c)  # dangling ids and repeats are left as they were
+                    continue
+                seen.add(c)
+                kind = self.sb.kind(c)
+                obj = self.sb.items[c]
+                if kind in WRAPPER_KINDS:
+                    direct = sum(1 for x in self.sb.children(c) if self.sb.kind(x) == KIND_TAB)
+                    done.append({
+                        "kind": kind,
+                        "title": folder_title(obj) if kind == KIND_TAB_GROUP else None,
+                        "path": join_path(path) if path else "",
+                        "tabs": direct,  # its own tabs; a nested wrapper is listed on its own
+                    })
+                    flatten(c, path + (folder_title(obj),) if kind == KIND_TAB_GROUP else path)
+                    # Ids that point to nothing go with the wrapper.
+                    inner = [x for x in obj.get("childrenIds") or [] if isinstance(x, str) and x in self.sb.items]
+                    for x in inner:
+                        self.sb.items[x]["parentID"] = pid
+                        if self.sb.kind(x) == KIND_TAB:
+                            moved.add(x)
+                    out.extend(inner)
+                    self.sb.items.pop(c, None)
+                else:
+                    if kind in FOLDER_KINDS:
+                        flatten(c, path + (folder_title(obj),))
+                    elif self.sb.children(c):
+                        flatten(c, path)
+                    out.append(c)
+            self.sb.items[pid]["childrenIds"] = out
+
+        flatten(pinned, ())
+        if not done:
+            return done
+        self._unwrapped_tabs |= moved
+        splits = [d for d in done if d["kind"] == KIND_SPLIT]
+        groups = [d for d in done if d["kind"] == KIND_TAB_GROUP]
+        what = " and ".join(x for x in (_n(len(splits), "split view") if splits else "",
+                                        _n(len(groups), "tab group") if groups else "") if x)
+
+        def where(d: dict) -> str:
+            return f"in {d['path']}" if d["path"] else "at the top level"
+
+        details = [f'tab group "{d["title"]}" {where(d)}, {_n(d["tabs"], "tab")}' for d in groups]
+        details += [f"split view {where(d)}, {_n(d['tabs'], 'tab')}" for d in splits]
+        one = len(done) == 1
+        actions.append(
+            f"unwrapped {what} in the pinned area, because Dia's importer drops the tabs inside "
+            + ("it" if one else "them")
+            + f"; {'its' if one else 'their'} {_n(len(moved), 'tab')} now sit where "
+            + ("it was" if one else "the wrappers were")
+            + ", in order (" + "; ".join(details[:5]) + ("; ..." if len(details) > 5 else "") + ")"
+        )
+        return done
 
     def _apply_folder_strategies(self, space: Space, sp: SpacePlan, overrides: Dict[str, str], actions: List[str]) -> None:
         pinned = space.pinned_id
@@ -609,6 +694,13 @@ class Transformer:
             fid = self._new_folder(name, pinned)
             self.sb.items[fid]["childrenIds"] = build(entries, fid)
             self.sb.attach(fid, pinned)
+            kept_splits = sum(1 for i in self.sb.subtree_ids(fid) if self.sb.kind(i) == KIND_SPLIT)
+            if kept_splits:
+                self.warnings.append(
+                    f'space "{space.title}": {_n(kept_splits, "split view")} kept in "{name}" '
+                    "(open_tabs_split_views: keep); Dia's importer drops the tabs inside pinned split views "
+                    "(seen in a real migration test), so use flatten to keep them"
+                )
             actions.append(f'moved {_n(stats["tabs"], "open tab")} into a new pinned folder "{name}"'
                            + (f" ({'; '.join(notes)})" if notes else ""))
         for r in removed:
@@ -709,5 +801,6 @@ def what_if(source: Sidebar, plan: Plan, space_id: str) -> Dict[str, dict]:
             "bookmarks": sr.bookmarks,
             "deduplicated": dedup,
             "open_tabs_lost": after.open_tabs_lost if after else 0,
+            "wrapped_tabs_lost": after.wrapped_tabs_lost if after else 0,
         }
     return out

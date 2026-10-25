@@ -186,6 +186,58 @@ def test_status_reports_active_swap(env):
     lines = S.status(env["sidebar"], env["backups"], FakeChecker(False), env["prepared"])
     text = "\n".join(lines)
     assert "ACTIVE SWAP" in text and "CLEANED" in text and "Arc: not running" in text
+    assert "the sidebar file is still the installed cleaned copy" in text
+    assert "WARNING" not in text
+
+
+def test_status_warns_when_the_file_changed_during_the_swap(env):
+    """Arc launched in the background (by another app) rewrote the cleaned file."""
+    do_swap(env)
+    env["sidebar"].write_bytes(env["sidebar"].read_bytes().replace(b"Team Wiki", b"Team Wiki (synced)"))
+    lines = S.status(env["sidebar"], env["backups"], FakeChecker(False))
+    warnings = [line for line in lines if line.startswith("WARNING:")]
+    assert warnings == [
+        "WARNING: the sidebar file no longer matches the installed cleaned copy. Arc or another program wrote "
+        "the file; quit Arc, then restore (`arc2dia restore --apply`)."
+    ]
+    assert not any("still the installed cleaned copy" in line for line in lines)
+
+
+def test_status_warns_when_arc_runs_during_the_swap(env):
+    do_swap(env)
+    lines = S.status(env["sidebar"], env["backups"], FakeChecker(True))
+    warnings = [line for line in lines if line.startswith("WARNING:")]
+    assert len(warnings) == 1 and "Arc is running while a swap is active" in warnings[0]
+    assert "closing its window does not quit it" in warnings[0]
+
+
+def test_status_warns_when_the_original_is_back_but_the_swap_is_recorded(env):
+    do_swap(env)
+    state = json.loads((env["backups"] / S.STATE_FILE).read_text())
+    original = env["backups"] / state["active"] / S.ORIGINAL_NAME
+    env["sidebar"].write_bytes(original.read_bytes())
+    text = "\n".join(S.status(env["sidebar"], env["backups"], FakeChecker(False)))
+    assert "WARNING: the sidebar file is the original again" in text and "Do not run Dia's import now" in text
+    env["sidebar"].rename(env["sidebar"].with_name("moved.json"))
+    text = "\n".join(S.status(env["sidebar"], env["backups"], FakeChecker(False)))
+    assert "WARNING: the sidebar file is missing while a swap is active" in text
+
+
+def test_status_without_a_swap_has_no_warning(env):
+    text = "\n".join(S.status(env["sidebar"], env["backups"], FakeChecker(True)))
+    assert "no active swap" in text and "Arc: running" in text and "WARNING" not in text
+
+
+def test_swap_output_says_how_to_keep_arc_quit(env):
+    dry = "\n".join(do_swap(env, apply=False))
+    assert "closing Arc's window does not quit Arc (use Arc > Quit Arc,\nor Cmd+Q)" in dry
+    assert "other apps or automation can launch Arc in the background" in dry
+    assert "Safest, if you can: turn off Arc's sync before the swap" in dry
+    applied = "\n".join(do_swap(env))
+    assert "closing Arc's window does not quit Arc" in applied
+    assert "other apps or automation can launch Arc in the background" in applied
+    assert "Turning off Arc's sync before the swap is the safest choice; do not open Arc now" in applied
+    assert "Run `arc2dia status` right before and right after the import" in applied
 
 
 def test_pgrep_checker(monkeypatch):
