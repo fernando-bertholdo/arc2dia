@@ -83,7 +83,8 @@ def _short(sha: Optional[str]) -> str:
 
 # --------------------------------------------------------------------------- swap
 
-def swap(sidebar_path, prepared_dir, backup_root, apply: bool, checker: ProcessChecker) -> List[str]:
+def swap(sidebar_path, prepared_dir, backup_root, apply: bool, checker: ProcessChecker,
+         allow_other_source: bool = False) -> List[str]:
     sidebar = expand(sidebar_path)
     backup_root = expand(backup_root)
     prepared = expand(prepared_dir)
@@ -109,7 +110,8 @@ def swap(sidebar_path, prepared_dir, backup_root, apply: bool, checker: ProcessC
             f"{sidebar} already is the cleaned file, but no active swap is recorded in {backup_root}. "
             f"Check `{PROG} status` before going on."
         )
-    if current != manifest["source_sha256"]:
+    other_source = current != manifest["source_sha256"]
+    if other_source and not allow_other_source:
         raise SafetyError(
             f"{sidebar} changed since prepare (Arc was probably opened). Run plan/prepare again on the current file."
         )
@@ -117,7 +119,13 @@ def swap(sidebar_path, prepared_dir, backup_root, apply: bool, checker: ProcessC
 
     backup_dir = unique_dir(backup_root, timestamp())
     original_backup = backup_dir / ORIGINAL_NAME
-    lines = [
+    lines = []
+    if other_source:
+        lines.append(
+            "TEST MODE (--allow-other-source): the cleaned file was prepared from a different sidebar, "
+            "so Dia will import that other data. Your current Arc file is still backed up and restored."
+        )
+    lines += [
         f"Swap plan for {sidebar}:",
         f"  1. move the original to {original_backup} (sha256 {_short(current)}) and check its hash",
         f"  2. copy {cleaned} into its place and check its hash ({_short(manifest['cleaned_sha256'])})",
@@ -140,6 +148,7 @@ def swap(sidebar_path, prepared_dir, backup_root, apply: bool, checker: ProcessC
         "original_sha256": current,
         "cleaned_sha256": manifest["cleaned_sha256"],
         "prepared_dir": str(prepared),
+        "other_source": other_source,
     }
     write_json(backup_dir / SWAP_RECORD, record)
 

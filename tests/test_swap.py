@@ -76,6 +76,18 @@ def test_refuses_when_source_changed_since_prepare(env):
         do_swap(env)
 
 
+def test_allow_other_source_installs_and_restores_the_real_file(env):
+    real = env["sidebar"].read_text().replace("Team Wiki", "Team Wiki 2")
+    env["sidebar"].write_text(real)
+    real_sha = sha256_file(env["sidebar"])
+    lines = S.swap(env["sidebar"], env["prepared"], env["backups"], True, FakeChecker(False),
+                   allow_other_source=True)
+    assert any("TEST MODE" in line for line in lines)
+    assert sha256_file(env["sidebar"]) == env["cleaned_sha"]
+    S.restore(env["sidebar"], env["backups"], True, FakeChecker(False))
+    assert sha256_file(env["sidebar"]) == real_sha
+
+
 def test_refuses_failed_validation(env):
     manifest_path = env["prepared"] / MANIFEST_NAME
     manifest = json.loads(manifest_path.read_text())

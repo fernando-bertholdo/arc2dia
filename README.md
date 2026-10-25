@@ -7,8 +7,25 @@ prepares a cleaned copy of Arc's sidebar file, lets the official importer read t
 puts your original file back, byte for byte. It is written in plain Python 3.9+ with no
 dependencies and no network access.
 
-Status: v0. It is built on observations from real migrations, but Arc's and Dia's formats are
-undocumented and may change. Read the safety notes before you use it.
+Status: v0. The cleaning approach was used in a real migration (Dia imported the cleaned file as
+expected), and `scan`, `prepare` and `verify` were checked against real Arc and Dia data. The
+`swap` and `restore` commands are covered by tests but have not yet run end to end on a real Mac.
+Arc's and Dia's formats are undocumented and may change. Read the safety notes before you use it.
+
+## Quick start
+
+```sh
+git clone https://github.com/fernando-bertholdo/arc2dia.git && cd arc2dia
+python3 -m arc2dia scan                      # see what Dia's importer would do (read-only)
+python3 -m arc2dia prepare                   # write a cleaned copy to arc2dia-out/
+# quit Arc, then:
+python3 -m arc2dia swap --apply              # put the cleaned copy in Arc's place
+# in Dia: Dia > Import from Another Browser... > Arc, and wait for it to finish
+python3 -m arc2dia restore --apply           # put your original Arc file back
+python3 -m arc2dia verify --prepared arc2dia-out
+```
+
+Read "The safe workflow" below before running `swap` for real.
 
 ## Why
 
@@ -24,9 +41,9 @@ real migration: 0 of 210, even though the help article says they do.
 
 **Nested folders are flattened.** Dia cannot nest Tab Groups, so every nested Arc folder becomes its
 own top-level pinned group, named only after itself. A space with 116 folders, 112 of them nested
-up to 5 levels deep, became about 116 flat groups called things like "Python" and "Libraries", with
-no hint of where they came from. Most of them were two copies of the same old "Imported From Edge"
-bookmark tree.
+up to 5 levels deep, became over a hundred flat groups in one long list, each with no hint of
+where it came from. Most of them were two copies of the same old "Imported From Edge" bookmark
+tree.
 
 Re-creating the missing tabs by script is not a good fix either. Tabs created through Dia's
 AppleScript load immediately, and opening about 50 at once froze a 16 GB Mac. Tabs that come in
@@ -68,7 +85,7 @@ other systems if you pass `--sidebar` with a copy of the file.
 Run it from a checkout, without installing anything:
 
 ```sh
-git clone <repository-url> arc2dia && cd arc2dia
+git clone https://github.com/fernando-bertholdo/arc2dia.git && cd arc2dia
 python3 -m arc2dia --help
 ```
 
@@ -278,6 +295,12 @@ Tests use synthetic sidebars built by `tests/fixturegen.py` (all URLs use reserv
 domains); `examples/synthetic-StorableSidebar.json` is one of them, ready for
 `arc2dia scan --sidebar examples/synthetic-StorableSidebar.json`. Everything that touches macOS
 (`pgrep`, `osascript`) sits behind small interfaces, so the suite runs anywhere.
+
+To test the whole flow on a Mac without giving Dia your own data, prepare the synthetic example and
+install it with `arc2dia swap --apply --allow-other-source`. Normally `swap` refuses a cleaned file
+that was not prepared from the current Arc file; this flag lets it through for testing, and your
+real Arc file is still backed up and restored as usual. Do this with Dia's data set aside (step 6),
+so the test profiles land in a throwaway Dia.
 
 The code lives in `arc2dia/`: `model.py` (file format), `analysis.py` (scan and prediction),
 `plan.py`, `transform.py` (the strategies), `bookmarks.py`, `validate.py`, `prepare.py`,

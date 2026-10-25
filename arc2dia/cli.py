@@ -275,7 +275,8 @@ def cmd_prepare(args, deps: Deps) -> int:
 
 
 def cmd_swap(args, deps: Deps) -> int:
-    for line in swap(args.sidebar, args.prepared, args.backup_dir, args.apply, deps.checker):
+    for line in swap(args.sidebar, args.prepared, args.backup_dir, args.apply, deps.checker,
+                     allow_other_source=args.allow_other_source):
         _out(line)
     return 0
 
@@ -415,6 +416,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--backup-dir", default=str(DEFAULT_BACKUP_ROOT), metavar="DIR",
                    help=f"where backups go [{DEFAULT_BACKUP_ROOT}]")
     p.add_argument("--apply", action="store_true", help="really do it")
+    p.add_argument("--allow-other-source", action="store_true",
+                   help="testing only: install a cleaned file prepared from a different sidebar, such as the "
+                        "synthetic example; the current Arc file is still backed up and restored")
     p.set_defaults(func=cmd_swap)
 
     p = sub.add_parser("restore", help="put the original Arc sidebar back and check its hash (dry run unless --apply)")

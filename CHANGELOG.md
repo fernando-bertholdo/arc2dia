@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2 (2026-10-24)
+
+- `swap --allow-other-source` (testing only): install a cleaned file prepared from a different
+  sidebar, such as the synthetic example, so the whole flow can be tested on a Mac without giving
+  Dia your own data. The current Arc file is still backed up and restored.
+- README: quick start, honest status line, real clone URL.
+
 ## 0.1.1 (2026-10-24)
 
 Fixes from the first run on a real sidebar.
