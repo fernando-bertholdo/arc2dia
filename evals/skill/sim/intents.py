@@ -224,6 +224,12 @@ RESET_CONSENT = re.compile(
     r"(?:your\s+(?:explicit\s+)?(?:okay|ok|consent|permission|approval)|answer\s+\"?yes|reply\s+\"?yes|\"yes,?\s+reset)")
 
 
+APPROVAL_Q = re.compile(
+    r"(?:reply|answer|say|respond)\s+(?:with\s+)?\"?yes|yes\s+or\s+no|(?:may|can|shall|should)\s+i\s+(?:run|apply|do|go\s+ahead|"
+    r"continue|proceed|start)|do\s+you\s+approve|(?:ok|okay)\s+to\s+(?:run|apply|proceed|continue)|is\s+(?:it|that)\s+(?:ok|okay)"
+    r"|(?:posso|devo)\s+(?:rodar|aplicar|seguir|continuar|prosseguir)|sim\s+ou\s+não|sim\s+ou\s+nao")
+
+
 def menu(message: str):
     """The options of an answer menu, or [] when the message has none."""
     msg = normalize(message)
@@ -465,6 +471,12 @@ def classify(message: str) -> List[Intent]:
         m = RESET_CONSENT.search(msg)
         if m:
             add("reset_dia", m.start(), msg[max(0, m.start() - 80):m.end() + 80])
+
+    # "May I run the swap now? Reply yes or no": a user who approved the plan says yes.
+    if not any(k in found for k in ("reset_dia", "choice", "pick_option", "import_status")):
+        m = APPROVAL_Q.search(msg)
+        if m:
+            add("approve", m.start(), msg[max(0, m.start() - 80):m.end() + 80])
 
     return sorted(found.values(), key=lambda i: i.pos)
 

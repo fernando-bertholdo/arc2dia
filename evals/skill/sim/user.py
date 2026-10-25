@@ -193,6 +193,9 @@ def handle(sb: Sandbox, message: str) -> Tuple[str, list, list]:
             sb.save_dia(dia)
             parts.append("OK, I imported the bookmarks file into Dia's bookmarks.")
             actions.append({"intent": "import_bookmarks", "effect": "bookmarks file imported"})
+        elif it.name == "approve":
+            parts.append("Yes, go ahead.")
+            actions.append({"intent": "approve"})
         elif it.name == "run_command":
             parts.append("I'd rather not type commands myself. Please run them for me; "
                          "I'll do whatever is needed in the apps.")

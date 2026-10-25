@@ -72,7 +72,7 @@ PHRASES = [
     ("Optionally, you can import bookmarks.html in Dia later via File > Import Bookmarks.", []),
     ("Before I can continue, please quit Arc completely (Cmd+Q).", ["quit_arc"]),
     ("Please run the import in Dia now: Dia menu → Import from Another Browser → Arc.", ["run_import"]),
-    ("Should I go ahead with the swap?", []),
+    ("Should I go ahead with the swap?", ["approve"]),
     # answer menus (found in the first Haiku run): actions inside options are not requests
     ("Please reply with one of these:\n- \"retry swap\": I run the same swap step again, then continue with the "
      "import steps.\n- \"stop\": I leave everything as it is.", ["pick_option"]),
@@ -93,7 +93,9 @@ PHRASES = [
     ("Arc is still running. Please open Arc and choose Arc > Quit Arc (or press Cmd+Q).", ["quit_arc"]),
     ("The swap is done. Work: 5 groups, Open tabs from Arc (6 tabs). Your 9 open tabs are in a pinned folder.", []),
     ("Got it, Arc is closed and Dia will not be reset. The swap was blocked by a safety check, so I need you to "
-     "approve it: may I run the swap now? Reply \"yes\" to approve, or \"no\" and I will stop here.", []),
+     "approve it: may I run the swap now? Reply \"yes\" to approve, or \"no\" and I will stop here.", ["approve"]),
+    ("I received \"Arc is closed,\" thank you. My question is different: may I run the swap now? Please reply YES or "
+     "NO only.", ["approve"]),
     # from the Sonnet runs: numbered strategy lists and numbered steps are not menus
     ("Each space has 4 choices (my default is the second):\n1. keep: flat groups\n2. path-names: full paths\n"
      "3. merge-to-top\n4. to-bookmarks\nWhich do you want?", ["choice"]),

@@ -55,6 +55,20 @@ cd "$RUN" && claude -p "$(cat PROMPT.md)" --model sonnet \
 
 Do not answer for the user yourself: the `user` script is the user.
 
+What the pilot in `RESULTS.md` did instead: one Claude Code subagent per run, with a model
+override, given only "read `<run>/PROMPT.md` and do what it says; use only Bash, Read and Write".
+Two things to know when running it that way:
+
+- Subagents may not write report files, so the agent gives the report as its final message (the
+  prompt allows it). Save that message as `<run>/report.md` before grading.
+- An auto-mode safety classifier can refuse `swap --apply` (or even `swap` and `prepare`) when the
+  only "yes" comes from the simulated user. The prompt's sentence that the Mac is a disposable
+  sandbox makes this rarer, not impossible. Count such runs as blocked, not as model failures,
+  and check that the agent stopped and asked instead of working around the block.
+
+After a run, `python3 evals/skill/audit_user.py <run>` lists every message the simulated user
+answered with the fallback reply and every action it took, so misreads can be spotted by hand.
+
 ## 3. Grade it
 
 ```sh
