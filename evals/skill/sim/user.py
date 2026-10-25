@@ -159,6 +159,8 @@ def handle(sb: Sandbox, message: str) -> Tuple[str, list, list]:
             actions.append({"intent": "dia_state"})
         elif it.name == "import_status":
             imports = sb.dia().get("imports", [])
+            if not imports and any(i.name == "run_import" for i in intents):
+                continue  # the import is being asked for in this same message; its reply says how it went
             if not imports:
                 reply = "I haven't run Dia's import yet. Should I do it now?"
             elif imports[-1].get("ok"):

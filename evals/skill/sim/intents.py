@@ -172,10 +172,21 @@ OPEN_ARC_BLOCK = re.compile(_w("after|until|till|once|when|before|only|if|não|n
 # the import again") are not requests: the user picks an option instead.
 OPTION_LINE = re.compile(
     r"(?m)^[ \t]*(?:[-*•][ \t]*)?(?:(?:option|opção|opcao)[ \t]+)?"
-    r"(?:\(?(?P<letter>[a-d1-4])[.):][ \t]+|\"(?P<quoted>[^\"\n]{2,40})\"[ \t]*[:–—-][ \t]*)(?P<text>.+)$")
+    r"(?:\(?(?P<letter>[a-d])[.):][ \t]+|\"(?P<quoted>[^\"\n]{2,40})\"[ \t]*[:–—-][ \t]*)(?P<text>.+)$")
+# Letters and quoted labels only: numbered lines are steps or a strategy list (answered by "choice").
+# The cue must ask for a pick ("choose one"), not be an instruction ("choose Dia > Import...").
 MENU_CUE = re.compile(_w(
-    "reply with|respond with|answer with|choose|pick|select|one of these|which option|which one|the letter|"
-    "a or b|a/b|escolha|responda com|qual opção|qual opcao|uma destas|uma dessas|uma das opções|uma das opcoes"))
+    "reply with|respond with|answer with|choose one|pick one|select one|please choose|please pick|choose an option|"
+    "choose between|one of these|one of the following|which option|which one|which of these|the letter|"
+    "a or b|a/b|escolha uma|escolha entre|responda com|qual opção|qual opcao|uma destas|uma dessas|"
+    "uma das opções|uma das opcoes|qual delas"))
+# A question about where Dia's import stands, in any form ("Which of these is it? (a) it finished
+# (b) still running (c) error", "DONE / WAIT / ERROR"): answered from what really happened.
+STATUS_WORDS = re.compile(_w(
+    "finished|done|completed|complete|error|errors|still running|in progress|where the import stands|"
+    "has it finished|did it finish|did it work|how did it go|how it went|started|terminou|acabou|erro|"
+    "deu certo|funcionou|em andamento"))
+STATUS_ASK = re.compile(r"\?|" + _w("reply|answer|tell me|let me know|responda|me diga|me avise"))
 OPTION_GOOD = re.compile(_w(
     "retry|try again|continue|proceed|go ahead|apply|yes|do it|finish|resume|run the swap|redo|"
     "continuar|prosseguir|tentar|tente|sim|seguir|refazer|aplicar"))
@@ -300,6 +311,17 @@ def classify(message: str) -> List[Intent]:
             about_plan=bool(PLAN_TOPIC.search(msg)))
 
     opts = menu(message)
+    status_q = bool(IMPORT_WORD.search(msg) and STATUS_ASK.search(msg) and opts and
+                    any(STATUS_WORDS.search((m.group("quoted") or "") + " " + m.group("text")) for m in opts) and
+                    len(set(STATUS_WORDS.findall(msg))) >= 2)
+    if not status_q and IMPORT_WORD.search(msg) and STATUS_ASK.search(msg):
+        bare = re.findall(r"(?m)^[ \t]*[-*•][ \t]*([a-z]{2,12})[ \t]*:", msg)
+        status_q = len(bare) >= 2 and any(STATUS_WORDS.search(b) for b in bare)  # "- DONE: ...  - ERROR: ..."
+    if status_q:
+        for m in opts:
+            msg = msg[:m.start()] + " " * (m.end() - m.start()) + msg[m.end():]
+        add("import_status", 0, message[:200], menu=True)
+        opts = []
     if opts:
         label, text = pick_option(opts)
         add("pick_option", opts[0].start(), msg[opts[0].start():opts[-1].end()], label=label, option=text)

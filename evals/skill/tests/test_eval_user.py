@@ -82,6 +82,17 @@ PHRASES = [
      "you run the import again.\nB. Stop here.", ["pick_option"]),
     ("Do you want me to retry the swap step, or stop here?", ["pick_option"]),
     ("Did you want me to clean up Dia's old \"Personal\" profile? That would be a Dia data reset.", ["reset_dia"]),
+    # from the Sonnet runs: numbered strategy lists and numbered steps are not menus
+    ("Each space has 4 choices (my default is the second):\n1. keep: flat groups\n2. path-names: full paths\n"
+     "3. merge-to-top\n4. to-bookmarks\nWhich do you want?", ["choice"]),
+    ("The swap is done.\n\nPlease do this now:\n1. Open Dia and choose Dia > Import from Another Browser... > Arc.\n"
+     "2. Wait until the new profiles appear.\n3. Tell me when it finished, or what error Dia showed.", ["run_import"]),
+    ("Did you open Dia and start the import? Which of these is it?\n(a) The import finished and the new profiles are "
+     "there.\n(b) The import is still running or has not started.\n(c) Dia showed an error.", ["import_status"]),
+    ("Please reply in one of these ways:\n- \"finished\": the import completed and the profiles appeared.\n"
+     "- \"error: ...\" with the exact message Dia showed.\n- \"stop\": you want to stop.", ["import_status"]),
+    ("Please answer with one word:\n- DONE: you ran the import and the profiles appeared.\n- WAIT: not yet.\n"
+     "- ERROR: Dia showed an error.\n- STOP: cancel.", ["import_status"]),
 ]
 
 
