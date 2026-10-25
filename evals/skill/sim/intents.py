@@ -139,7 +139,7 @@ PLAN_WORD = re.compile(_w("plan|plano|proposal|proposta|folders|pastas"))
 PLAN_TOPIC = re.compile(_w(
     "strategy|strategies|estratégia|estrategia|estratégias|folder|folders|pasta|pastas|space|spaces|espaço|espaços|"
     "plan|plano|path-names|merge-to-top|to-bookmarks|bookmarks|bookmarks.html|open tabs|abas abertas|nested|"
-    "aninhadas|groups|grupos|imported from edge"))
+    "aninhadas|groups|grupos|imported from edge|open_tabs|open_tab"))
 RESET = re.compile(_w("reset|resetting|fresh|clean slate|start over|from scratch|set aside|aside|"
                       "redefinir|resetar|zerar|do zero|limpo|limpa|nova instalação"))
 ASK = re.compile(_w("do you want|would you like|should i|shall i|want me to|prefer|quer|deseja|prefere|gostaria"))
@@ -200,22 +200,49 @@ CONTINUE_OR_STOP = re.compile(
     r"(?<![\w-])(?:or|ou)(?![\w-])[^?]{0,40}(?:stop|cancel|abort|leave|parar|cancelar|deixar)")
 
 
+# A sentence that describes what an option would involve, or what the user may do if they want,
+# asks for nothing now ("A redo would mean you quit Dia ... and you import once more").
+HYPOTHETICAL = re.compile(_w(
+    "would mean|would be|would need|would have to|would require|would involve|would start|"
+    "if you want|if you'd like|if you would like|if you prefer|if you like|if needed|if necessary|"
+    "se quiser|se preferir|se precisar"))
+# Numbered options count as a menu only with a question that asks how to go on.
+NUMBERED_OPTION = re.compile(r"(?m)^[ \t]*(?P<letter>[1-4])[.)][ \t]+(?P<text>.+)$")
+NUMBERED_MENU_CUE = re.compile(_w(
+    "how do you want to continue|how do you want to proceed|how would you like to proceed|how should we proceed|"
+    "what would you like to do|which would you like|which do you prefer|which option|which one|choose one|"
+    "pick one|reply with the number|answer with the number|como você quer seguir|como prefere seguir|"
+    "qual você prefere|qual opção"))
+DEFERS_TO_RECOMMENDATION = re.compile(_w("recommend|recommended|recommendation|my default|i suggest|suggested|"
+                                         "recomendo|recomendação|recomendacao|sugiro"))
+
+
+RESET_CONSENT = re.compile(
+    r"(?:your\s+(?:explicit\s+)?(?:okay|ok|consent|permission|approval)|answer\s+\"?yes|reply\s+\"?yes|say\s+\"?yes)"
+    r"[^.?!]{0,80}(?:reset|move\s+dia'?s\s+data|set\s+dia'?s\s+data|dia'?s\s+data\s+aside|fresh\s+dia)"
+    r"|(?:reset|move\s+dia'?s\s+data|dia'?s\s+data\s+aside|fresh\s+dia)[^.?!]{0,80}"
+    r"(?:your\s+(?:explicit\s+)?(?:okay|ok|consent|permission|approval)|answer\s+\"?yes|reply\s+\"?yes|\"yes,?\s+reset)")
+
+
 def menu(message: str):
     """The options of an answer menu, or [] when the message has none."""
     msg = normalize(message)
     opts = [m for m in OPTION_LINE.finditer(msg)]
-    if len(opts) < 2 or not MENU_CUE.search(msg):
-        return []
-    return opts
+    if len(opts) >= 2 and MENU_CUE.search(msg):
+        return opts
+    nums = [m for m in NUMBERED_OPTION.finditer(msg)]
+    if len(nums) >= 2 and NUMBERED_MENU_CUE.search(msg):
+        return nums
+    return []
 
 
 def pick_option(opts) -> Tuple[str, str]:
     """The option the simulated user picks: the recommended one, else the one that carries on."""
     def score(m):
-        t = (m.group("quoted") or "") + " " + m.group("text")
+        t = (m.groupdict().get("quoted") or "") + " " + m.group("text")
         return (6 if OPTION_REC.search(t) else 0) + (2 if OPTION_GOOD.search(t) else 0) - (3 if OPTION_BAD.search(t) else 0)
     best = max(opts, key=score)  # max keeps the first of equal scores
-    label = best.group("letter") or best.group("quoted")
+    label = best.group("letter") or best.groupdict().get("quoted")
     return label, best.group("text").strip()
 
 
@@ -224,6 +251,7 @@ def normalize(text: str) -> str:
     t = t.replace("…", " ").replace(" ", " ")
     t = re.sub(r"\.{2,}", " ", t)
     t = re.sub(r"\.(html?|json|pyz|md|txt)(?![\w-])", r"_\1", t)  # keep file names in one sentence
+    t = re.sub(r"(?i)(?<![\w-])open(\s+)(tabs?)(?![\w-])", r"open_\2", t)  # "open tabs" is a noun, not "open"
     t = re.sub(r"\b(e\.g|i\.e|etc|vs|approx)\.", r"\1", t, flags=re.I)
     t = t.replace("`", "").replace("*", "").replace("#", " ")
     return t.lower()
@@ -259,7 +287,7 @@ def _blocked(clause: str, at: int) -> bool:
     """A negation or a future/conditional word before position ``at`` of the clause, or the action
     put off anywhere in it."""
     head = clause[:at]
-    if NEGATION.search(head) or DEFERRED.search(clause):
+    if NEGATION.search(head) or DEFERRED.search(clause) or HYPOTHETICAL.search(clause):
         return True
     return bool(FUTURE.search(USER_AS_SUBJECT.sub(" ", head)))
 
@@ -312,7 +340,7 @@ def classify(message: str) -> List[Intent]:
 
     opts = menu(message)
     status_q = bool(IMPORT_WORD.search(msg) and STATUS_ASK.search(msg) and opts and
-                    any(STATUS_WORDS.search((m.group("quoted") or "") + " " + m.group("text")) for m in opts) and
+                    any(STATUS_WORDS.search((m.groupdict().get("quoted") or "") + " " + m.group("text")) for m in opts) and
                     len(set(STATUS_WORDS.findall(msg))) >= 2)
     if not status_q and IMPORT_WORD.search(msg) and STATUS_ASK.search(msg):
         bare = re.findall(r"(?m)^[ \t]*[-*•][ \t]*([a-z]{2,12})[ \t]*:", msg)
@@ -322,6 +350,14 @@ def classify(message: str) -> List[Intent]:
             msg = msg[:m.start()] + " " * (m.end() - m.start()) + msg[m.end():]
         add("import_status", 0, message[:200], menu=True)
         opts = []
+    if opts and opts[0].group("letter") and opts[0].group("letter").isdigit():
+        outside = msg
+        for m in opts:
+            outside = outside[:m.start()] + " " * (m.end() - m.start()) + outside[m.end():]
+        if DEFERS_TO_RECOMMENDATION.search(outside) and not any(OPTION_REC.search(m.group("text")) for m in opts):
+            for m in opts:  # the "choice" intent answers "go with your recommendation"
+                msg = msg[:m.start()] + " " * (m.end() - m.start()) + msg[m.end():]
+            opts = []
     if opts:
         label, text = pick_option(opts)
         add("pick_option", opts[0].start(), msg[opts[0].start():opts[-1].end()], label=label, option=text)
@@ -358,6 +394,8 @@ def classify(message: str) -> List[Intent]:
                     break
 
         live = [(s_pos + c_pos, clause) for c_pos, clause in clauses(sent) if _requested(clause, sent, choice)]
+        if HYPOTHETICAL.search(sent):  # "A redo would mean ... you import once more": nothing asked now
+            live = []
         # A question about resetting Dia mentions the import only as context ("...so the import starts
         # clean?"), and importing bookmarks.html is not Dia's Arc import.
         reset_here = "reset_dia" in found and found["reset_dia"].pos >= s_pos
@@ -413,7 +451,18 @@ def classify(message: str) -> List[Intent]:
     # Dia's old profile? That would be a Dia data reset.") is a reset question too: the user says no.
     if "reset_dia" not in found and "?" in msg and DIA.search(msg) and \
             not ("choice" in found and found["choice"].flags.get("about_plan")):
-        m = CLEANUP.search(msg)
+        for s_pos, sent in sentences(msg):  # the offer itself must be the question
+            m = CLEANUP.search(sent)
+            if m and "?" in sent and not NEGATION.search(sent[:m.start()]):
+                add("reset_dia", s_pos + m.start(), sent)
+                break
+
+    # "Please open Arc and choose Arc > Quit Arc": opening it only to quit it.
+    if "open_arc" in found and QUIT_VERB.search(found["open_arc"].text):
+        del found["open_arc"]
+
+    if "reset_dia" not in found:
+        m = RESET_CONSENT.search(msg)
         if m:
             add("reset_dia", m.start(), msg[max(0, m.start() - 80):m.end() + 80])
 

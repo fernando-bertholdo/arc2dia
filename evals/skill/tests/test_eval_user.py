@@ -82,6 +82,18 @@ PHRASES = [
      "you run the import again.\nB. Stop here.", ["pick_option"]),
     ("Do you want me to retry the swap step, or stop here?", ["pick_option"]),
     ("Did you want me to clean up Dia's old \"Personal\" profile? That would be a Dia data reset.", ["reset_dia"]),
+    # from the Sonnet L1 S2 run
+    ("How do you want to continue?\n1. Retry once: I swap the cleaned file in again, you run the import again.\n"
+     "2. Retry on a clean Dia: first, with Dia quit, I move Dia's data aside.\n3. Stop here.", ["pick_option"]),
+    ("Before I touch Dia's data I need your explicit okay to move Dia's data aside. Please answer \"yes, reset "
+     "Dia\" if that's fine.", ["reset_dia"]),
+    ("A redo would mean you quit Dia, I move all of Dia's data aside, and you import once more with the cleaned "
+     "file.", []),
+    ("Dia doesn't read that file on its own, so import it by hand if you want them.", []),
+    ("Arc is still running. Please open Arc and choose Arc > Quit Arc (or press Cmd+Q).", ["quit_arc"]),
+    ("The swap is done. Work: 5 groups, Open tabs from Arc (6 tabs). Your 9 open tabs are in a pinned folder.", []),
+    ("Got it, Arc is closed and Dia will not be reset. The swap was blocked by a safety check, so I need you to "
+     "approve it: may I run the swap now? Reply \"yes\" to approve, or \"no\" and I will stop here.", []),
     # from the Sonnet runs: numbered strategy lists and numbered steps are not menus
     ("Each space has 4 choices (my default is the second):\n1. keep: flat groups\n2. path-names: full paths\n"
      "3. merge-to-top\n4. to-bookmarks\nWhich do you want?", ["choice"]),
