@@ -27,6 +27,20 @@ python3 -m arc2dia verify --prepared arc2dia-out
 
 Read "The safe workflow" below before running `swap` for real.
 
+## Use it as an Agent Skill
+
+`skill/arc2dia/` is an Agent Skill: a `SKILL.md` plus the whole tool in one file,
+`scripts/arc2dia.pyz`. Copy the folder into your agent's skills folder (for Claude Code,
+`~/.claude/skills/arc2dia/`) and ask it to migrate your Arc spaces, folders and open tabs to Dia.
+The skill walks the agent through the same workflow: it shows you the plan, asks you to quit Arc,
+waits while you run Dia's importer, always restores your original file, and never opens tabs.
+If your agent's permission check stops `swap --apply`, approve it in your app; the skill tells the
+agent never to work around it.
+
+`scripts/build_skill.sh` rebuilds the archive after a code change. `evals/skill/` holds the test
+harness, and `evals/skill/RESULTS.md` describes how Haiku, Sonnet and Opus did with three levels of
+detail in the instructions. The shipped `SKILL.md` is the most detailed level.
+
 ## Why
 
 Arc shuts down on December 22, 2026. Dia, from the same company, has an official importer
